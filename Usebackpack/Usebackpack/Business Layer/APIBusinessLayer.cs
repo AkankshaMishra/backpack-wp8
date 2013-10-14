@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Usebackpack.Business_Layer
 {
-    class APIBusinessLayer
+    public class APIBusinessLayer
     {
     }
 }
