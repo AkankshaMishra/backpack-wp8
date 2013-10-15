@@ -7,11 +7,13 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Usebackpack.Business_Layer;
 
 namespace Usebackpack
 {
     public partial class MyProfile : PhoneApplicationPage
     {
+        private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
         public MyProfile()
         {
             InitializeComponent();

@@ -9,12 +9,15 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Usebackpack.Model;
 using Resource = Usebackpack.Model;
+using Usebackpack.Business_Layer;
 
 
 namespace Usebackpack
 {
     public partial class CourseDetail : PhoneApplicationPage
     {
+        private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
+
         public CourseDetail()
         {
             InitializeComponent();

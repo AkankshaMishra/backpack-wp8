@@ -98,6 +98,7 @@
     </Compile>
     <Compile Include="Business Layer\APIBusinessLayer.cs" />
     <Compile Include="Business Layer\IAPIBusinessLayer.cs" />
+    <Compile Include="Common\Constant.cs" />
     <Compile Include="Common\Exceptions.cs" />
     <Compile Include="CourseDetail.xaml.cs">
       <DependentUpon>CourseDetail.xaml</DependentUpon>
@@ -110,6 +111,7 @@
     <Compile Include="Model\Deadlines.cs" />
     <Compile Include="Model\Discussions.cs" />
     <Compile Include="Model\EmailNotification.cs" />
+    <Compile Include="Model\GoogleToken.cs" />
     <Compile Include="Model\Notifications.cs" />
     <Compile Include="Model\Resources.cs" />
     <Compile Include="Model\Semester.cs" />

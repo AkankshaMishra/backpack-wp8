@@ -7,12 +7,14 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Usebackpack.Business_Layer;
 using Usebackpack.Model;
 
 namespace Usebackpack
 {
     public partial class Notification : PhoneApplicationPage
     {
+        private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
         public Notification()
         {
             InitializeComponent();

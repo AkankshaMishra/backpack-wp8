@@ -8,5 +8,20 @@ namespace Usebackpack.Business_Layer
 {
     interface IAPIBusinessLayer
     {
+        void GoogleAuthentication();
+
+        void BackpackSignIn();
+
+        void RetrieveUserId();
+
+        void RetrieveUserDetailsByUserId();
+
+        void RetrieveDiscussionsByDiscussionId();
+
+        void RetrieveCoursesByCourseId();
+
+        void RetrieveDeadlinesByCourseId();
+
+        void RetrieveResourcesByCourseId();
     }
 }
