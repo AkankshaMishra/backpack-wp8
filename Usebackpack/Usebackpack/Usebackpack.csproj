@@ -113,6 +113,7 @@
     <Compile Include="Model\EmailNotification.cs" />
     <Compile Include="Model\GoogleToken.cs" />
     <Compile Include="Model\Notifications.cs" />
+    <Compile Include="Model\Replies.cs" />
     <Compile Include="Model\Resources.cs" />
     <Compile Include="Model\Semester.cs" />
     <Compile Include="Model\User.cs" />

@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Usebackpack.Model
 {
+    [DataContract]
     public class Users
     {
         public int UserId { get; set; }
 
+        [DataMember(Name="first_name")]
         public string FirstName { get; set; }
 
+        [DataMember(Name="last_name")]
         public string LastName { get; set; }
-
+        
+        [DataMember(Name="email")]
         public string EmailId { get; set; }
 
+        [DataMember(Name="roll_no")]
         public string RollNo { get; set; }
 
         public string Website { get; set; }
@@ -24,7 +30,14 @@ namespace Usebackpack.Model
 
         public Semester Semester { get; set; }
 
+        [DataMember(Name="level")]
         public int Level { get; set; }
+
+        [DataMember(Name="points")]
+        public int TotalScore { get; set; } 
+       
+        [DataMember(Name="avatar")]
+        public string AvtarFileName { get; set; }
 
         public string UserType { get; set; }
 
@@ -50,6 +63,7 @@ namespace Usebackpack.Model
 
         public string NotificationPrefs { get; set; }
 
+        [DataMember(Name="courses")]
         public List<Course> UserCourses { get; set; }
 
 
