@@ -28,7 +28,9 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-          
+            <phone:WebBrowser 
+                x:Name="OAuthBrowser"
+                IsScriptEnabled="True"/>
         </Grid>
     </Grid>
 

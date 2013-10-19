@@ -28,35 +28,9 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Grid x:Name="LoginContent" Margin="10,3,3,3">
-                <!--<Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">EmailId :</TextBlock>
-                <TextBox x:Name="txtEmailId" Grid.Column="1" VerticalAlignment="Center" Width="350"></TextBox>
-                <TextBlock Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">Password :</TextBlock>
-                <TextBox x:Name="txtPassword" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"></TextBox>
-                <Button x:Name="btnLogin" Content="Login" Grid.Row="2" Grid.ColumnSpan="2" Width="350" Margin="0,20,0,0" Click="btnLogin_Click"></Button>-->
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-             
-                <TextBlock x:Name="tbEnmailId" VerticalAlignment="Center" Margin="10,0,0,0">EmailId</TextBlock>
-                <TextBox x:Name="txtEmailId" Grid.Row="1" VerticalAlignment="Center" Width="Auto"></TextBox>
-                <TextBlock Grid.Row="2" VerticalAlignment="Center" Margin="10,0,0,0">Password</TextBlock>
-                <TextBox x:Name="txtPassword" VerticalAlignment="Center" Grid.Row="3"></TextBox>
-                <Button x:Name="btnLogin" Content="Login" Grid.Row="4" Width="Auto" Margin="0,20,0,0" Click="btnLogin_Click"></Button>
-            </Grid>
+            <phone:WebBrowser 
+                x:Name="OAuthBrowser"
+                IsScriptEnabled="True"/>
         </Grid>
     </Grid>
 

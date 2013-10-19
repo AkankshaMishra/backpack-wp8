@@ -17,6 +17,11 @@ namespace Usebackpack
         public MyProfile()
         {
             InitializeComponent();
+            Loaded += MyProfile_Loaded;
+        }
+
+        void MyProfile_Loaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

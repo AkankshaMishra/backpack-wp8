@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Usebackpack.Common
 {
-    class Exceptions
+    public class Exceptions
     {
     }
 }
