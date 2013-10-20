@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Usebackpack.Business_Layer;
+using Usebackpack.Model;
 
 namespace Usebackpack
 {
@@ -15,6 +16,7 @@ namespace Usebackpack
     {
         private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
         string cookie = null;
+        Users user = null;
         public MyProfile()
         {
             InitializeComponent();
@@ -25,6 +27,8 @@ namespace Usebackpack
         {
             var cookieApp = App.Current as App;
             cookie = cookieApp.Cookie;
+            var userApp = App.Current as App;
+            user = userApp.User;
         }
     }
 }

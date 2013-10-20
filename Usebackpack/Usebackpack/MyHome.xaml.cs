@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Usebackpack.Business_Layer;
 using Usebackpack.Resources;
+using Usebackpack.Model;
 
 namespace Usebackpack
 {
@@ -16,6 +17,7 @@ namespace Usebackpack
     {
         private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
         string cookie = null;
+        Users user = null;
         // Constructor
         public MainPage()
         {
@@ -29,6 +31,8 @@ namespace Usebackpack
         {
             var cookieApp = App.Current as App;
             cookie = cookieApp.Cookie;
+            var userApp = App.Current as App;
+            user = userApp.User;
         }
 
         private void MyCourse_Click(object sender, RoutedEventArgs e)
