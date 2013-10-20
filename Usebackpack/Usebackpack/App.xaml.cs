@@ -12,6 +12,13 @@ namespace Usebackpack
 {
     public partial class App : Application
     {
+        public string Cookie { get; set; }
+
+        public int UserId { get; set; }
+
+        public int CourseId { get; set; }
+
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>

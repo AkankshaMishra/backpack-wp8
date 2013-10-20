@@ -15,13 +15,20 @@ namespace Usebackpack
     public partial class MainPage : PhoneApplicationPage
     {
         private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
+        string cookie = null;
         // Constructor
         public MainPage()
         {
             InitializeComponent();
-
+            Loaded += MainPage_Loaded;
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+        }
+
+        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            var cookieApp = App.Current as App;
+            cookie = cookieApp.Cookie;
         }
 
         private void MyCourse_Click(object sender, RoutedEventArgs e)

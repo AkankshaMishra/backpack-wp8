@@ -22,6 +22,7 @@ namespace Usebackpack
 
         void MyProfile_Loaded(object sender, RoutedEventArgs e)
         {
+
         }
     }
 }

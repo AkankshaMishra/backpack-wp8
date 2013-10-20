@@ -64,8 +64,14 @@ namespace Usebackpack.Model
         public string NotificationPrefs { get; set; }
 
         [DataMember(Name="courses")]
+        public string APICourseId { get; set; }
+
+        [DataMember(Name="coursenames")]
+        public string APICourseName { get; set; }
+
+        [DataMember(Name="upcomingdeadlines")]
+        public string UpcomingDeadlines { get; set; }
+
         public List<Course> UserCourses { get; set; }
-
-
     }
 }

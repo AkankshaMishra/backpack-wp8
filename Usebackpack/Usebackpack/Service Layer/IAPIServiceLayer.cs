@@ -25,7 +25,7 @@ namespace Usebackpack.Service_Layer
 
         Task<Discussions> RetrieveDiscussionsByDiscussionId(string cookie,int discussionId);
 
-        Task<List<Course>> RetrieveCoursesByCourseId(string cookie,int courseId);
+        Task<Course> RetrieveCoursesByCourseId(string cookie,int courseId);
 
         Task<List<Deadlines>> RetrieveDeadlinesByCourseId(string cookie,int discussionId);
 

@@ -141,7 +141,7 @@ namespace Usebackpack.Service_Layer
         /// <param name="cookie"></param>
         /// <param name="courseId"></param>
         /// <returns></returns>
-        public async Task<List<Course>> RetrieveCoursesByCourseId(string cookie,int courseId)
+        public async Task<Course> RetrieveCoursesByCourseId(string cookie,int courseId)
         {
             HttpClient retrieveCoursesClient = new HttpClient();
 
@@ -149,7 +149,7 @@ namespace Usebackpack.Service_Layer
             retrieveCoursesClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
             string responseCourseDetails = await retrieveCoursesClient.GetStringAsync(new Uri(Constant.BASEURL+Constant.RETRIEVECOURSEDETAILS+courseId, UriKind.Absolute));
-            List<Course> courseDetails = JsonConvert.DeserializeObject<List<Course>>(responseCourseDetails);
+            Course courseDetails = JsonConvert.DeserializeObject<Course>(responseCourseDetails);
             return courseDetails;
         }
 
@@ -185,8 +185,8 @@ namespace Usebackpack.Service_Layer
             retrieveResourceClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
             string responseResources = await retrieveResourceClient.GetStringAsync(new Uri(Constant.BASEURL+Constant.RETRIEVERESOURCES+courseId, UriKind.Absolute));
-            List<Usebackpack.Model.Resources> deadlineDetails = JsonConvert.DeserializeObject<List<Usebackpack.Model.Resources>>(responseResources);
-            return deadlineDetails;
+            List<Usebackpack.Model.Resources> lstResources = JsonConvert.DeserializeObject<List<Usebackpack.Model.Resources>>(responseResources);
+            return lstResources;
         }
     }    
 }

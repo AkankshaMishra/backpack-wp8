@@ -66,7 +66,29 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<Users> RetrieveUserDetailsByUserId(int userId,string cookie)
         {
-            return await objAPIServiceLayer.RetrieveUserDetailsByUserId(userId, cookie);
+            Users userDetails = new Users();
+            userDetails= await objAPIServiceLayer.RetrieveUserDetailsByUserId(userId, cookie);
+            string concatCourseId = userDetails.APICourseId;
+            string concatCourseName=userDetails.APICourseName;
+            int courseIdlength = concatCourseId.Length;
+            int courseNamelength = concatCourseName.Length;
+            string subCourseId = concatCourseId.Substring(1, courseIdlength -2);
+            string subCourseName = concatCourseName.Substring(1, courseNamelength - 2);
+            string[] courseIdArray=new string[30];
+            string[] courseNameArray=new string[30];
+            courseIdArray= subCourseId.Split(',');
+            courseNameArray=subCourseName.Split(',');
+
+            userDetails.UserCourses = new List<Course>();
+            for (int i = 0; i < courseIdArray.Length; i++)
+            {
+                Course objCourses=new Course();
+                objCourses.CourseId=Convert.ToInt32(courseIdArray[i]);
+                objCourses.CourseName = Convert.ToString(courseNameArray[i]);
+                userDetails.UserCourses.Add(objCourses);
+
+            }
+            return userDetails;
         }
 
         /// <summary>
@@ -86,7 +108,7 @@ namespace Usebackpack.Business_Layer
         /// <param name="cookie"></param>
         /// <param name="courseId"></param>
         /// <returns></returns>
-        public async Task<List<Course>> RetrieveCoursesByCourseId(string cookie,int courseId)
+        public async Task<Course> RetrieveCoursesByCourseId(string cookie,int courseId)
         {
             return await objAPIServiceLayer.RetrieveCoursesByCourseId(cookie, courseId);
         }
@@ -112,5 +134,6 @@ namespace Usebackpack.Business_Layer
         {
             return await objAPIServiceLayer.RetrieveResourcesByCourseId(cookie, courseId);
         }
+        
     }
 }

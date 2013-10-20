@@ -30,6 +30,7 @@ namespace Usebackpack
         private IAPIBusinessLayer objAPIBusinessLayer = APIBusinessLayer.APIBusinessInstance();
         private string googleToken = null;
         Users objUser = new Users();
+        List<Usebackpack.Model.Resources> lstResources = new List<Model.Resources>();
         public BackpackLogin()
         {
             InitializeComponent();
@@ -62,8 +63,24 @@ namespace Usebackpack
                 {
                     cookie = await objAPIBusinessLayer.BackpackSignIn(googleToken);
                     objUser.UserId = Convert.ToInt32(await objAPIBusinessLayer.RetrieveUserId(cookie));
-                    string uri = "/MyHome.xaml";
-                    NavigationService.Navigate(new Uri(uri, UriKind.Relative));
+
+                    objUser=await objAPIBusinessLayer.RetrieveUserDetailsByUserId(objUser.UserId, cookie);
+
+                    int courseId = 2;
+                    Course objCourse = new Course();
+                    objCourse = await objAPIBusinessLayer.RetrieveCoursesByCourseId(cookie, courseId);
+                   
+                    lstResources = await objAPIBusinessLayer.RetrieveResourcesByCourseId(cookie, courseId);
+
+                    //List<Deadlines> lstDeadlines = new List<Deadlines>();
+                    //lstDeadlines=await objAPIBusinessLayer.RetrieveDeadlinesByCourseId(cookie, courseId);
+
+                    //Setting the application level variable
+                    var cookieApp = App.Current as App;
+                    cookieApp.Cookie = cookie;
+                    //Navigate to Home page
+                    NavigationService.Navigate(new Uri(Constant.MYHOME, UriKind.Relative));
+                    
                 }
             }
         }
