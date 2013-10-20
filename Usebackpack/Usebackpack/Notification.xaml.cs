@@ -15,10 +15,18 @@ namespace Usebackpack
     public partial class Notification : PhoneApplicationPage
     {
         private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
+        string cookie = null;
         public Notification()
         {
             InitializeComponent();
+            Loaded += Notification_Loaded;
             lstNotifications.ItemsSource = GetNotifications();
+        }
+
+        void Notification_Loaded(object sender, RoutedEventArgs e)
+        {
+            var cookieApp = App.Current as App;
+            cookie = cookieApp.Cookie;
         }
 
         private static List<Notifications> GetNotifications()

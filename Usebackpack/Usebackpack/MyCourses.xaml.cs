@@ -14,9 +14,17 @@ namespace Usebackpack
     public partial class MyCourses : PhoneApplicationPage
     {
         private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
+        string cookie = null;
         public MyCourses()
         {
             InitializeComponent();
+            Loaded += MyCourses_Loaded;
+        }
+
+        void MyCourses_Loaded(object sender, RoutedEventArgs e)
+        {
+            var cookieApp = App.Current as App;
+            cookie = cookieApp.Cookie;
         }
     }
 }

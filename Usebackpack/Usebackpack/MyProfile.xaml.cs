@@ -14,6 +14,7 @@ namespace Usebackpack
     public partial class MyProfile : PhoneApplicationPage
     {
         private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
+        string cookie = null;
         public MyProfile()
         {
             InitializeComponent();
@@ -22,7 +23,8 @@ namespace Usebackpack
 
         void MyProfile_Loaded(object sender, RoutedEventArgs e)
         {
-
+            var cookieApp = App.Current as App;
+            cookie = cookieApp.Cookie;
         }
     }
 }

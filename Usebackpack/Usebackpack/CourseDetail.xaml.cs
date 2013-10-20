@@ -17,14 +17,21 @@ namespace Usebackpack
     public partial class CourseDetail : PhoneApplicationPage
     {
         private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
-
+        string cookie = null;
         public CourseDetail()
         {
             InitializeComponent();
+            Loaded += CourseDetail_Loaded;
             lstCourse.ItemsSource = GetDeadlines();
             lstDiscussion.ItemsSource = GetDiscussion();
             lstResource.ItemsSource = GetResource();
           
+        }
+
+        void CourseDetail_Loaded(object sender, RoutedEventArgs e)
+        {
+            var cookieApp = App.Current as App;
+            cookie = cookieApp.Cookie;
         }
 
         private static List<Deadlines> GetDeadlines()
