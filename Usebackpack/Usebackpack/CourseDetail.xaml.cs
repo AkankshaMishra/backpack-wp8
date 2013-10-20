@@ -10,52 +10,79 @@ using Microsoft.Phone.Shell;
 using Usebackpack.Model;
 using Resource = Usebackpack.Model;
 using Usebackpack.Business_Layer;
+using System.Threading.Tasks;
 
 
 namespace Usebackpack
 {
     public partial class CourseDetail : PhoneApplicationPage
     {
-        private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
+        private IAPIBusinessLayer objAPIBusinessLayer = APIBusinessLayer.APIBusinessInstance();
         string cookie = null;
         Users user = null;
+        int courseId=0;
+        Course objCourse = new Course();
+        List<Deadlines> listDeadlines = new List<Deadlines>();
         public CourseDetail()
         {
             InitializeComponent();
             Loaded += CourseDetail_Loaded;
-            lstCourse.ItemsSource = GetDeadlines();
+            //lstCourse.ItemsSource = GetDeadlines();
             lstDiscussion.ItemsSource = GetDiscussion();
-            lstResource.ItemsSource = GetResource();
+            //lstResource.ItemsSource = GetResource();
           
         }
 
-        void CourseDetail_Loaded(object sender, RoutedEventArgs e)
+        private async void CourseDetail_Loaded(object sender, RoutedEventArgs e)
         {
             var cookieApp = App.Current as App;
             cookie = cookieApp.Cookie;
             var userApp = App.Current as App;
             user = userApp.User;
+
+            var courseApp=App.Current as App;
+            courseId = courseApp.CourseId;
+
+            await RetrieveCourseDetails();
+            txtOverview.Text = objCourse.Overview;
+            txtTextBooks.Text = objCourse.TextBooks;
+            txtOfficeHours.Text = objCourse.OfficeHours;
+            txtEvaluation.Text = objCourse.Evaluation;
+            txtClassTiming.Text = objCourse.Timings;
+
+            listDeadlines = await RetrieveDeadlines();
         }
 
-        private static List<Deadlines> GetDeadlines()
+        private async Task<Course> RetrieveCourseDetails()
         {
-            List<Deadlines> lstDeadlines = new List<Deadlines>();
-            lstDeadlines.Add(new Deadlines() { DeadlineId = 535, Body = "The presentations will be held on Nov 11, 14, 18, and 21. You will need to form a group of 8-10 students. There are 8 candidate papers. Each group will present one paper. The titles of the papers are in the presentation sheet of goo.gl/ciiyEU Please form your group and select a paper. You will need to fill in your roll number against the title of the paper in the spreadsheet by the deadline. I will do the scheduling of presentations after that.\n You can also select a topic on a new technology. For that, you will need to get my permission beforehand", Title = "Presentations", LastUpdated = "Vinayak Naik updated 1 day ago", DueOn = "Due: Monday, October 7 2013, 11:30 (7 days left)" });
-            lstDeadlines.Add(new Deadlines() { DeadlineId = 535, Body = "The presentations will be held on Nov 11, 14, 18, and 21. You will need to form a group of 8-10 students. There are 8 candidate papers. Each group will present one paper. The titles of the papers are in the presentation sheet of goo.gl/ciiyEU Please form your group and select a paper. You will need to fill in your roll number against the title of the paper in the spreadsheet by the deadline. I will do the scheduling of presentations after that.\n You can also select a topic on a new technology. For that, you will need to get my permission beforehand", Title = "MidSem Demo", LastUpdated = "Vinayak Naik updated 2 days ago ", DueOn = "Due: Tuesday, October 22 2013, 11:00 (22 days left)" });
-            lstDeadlines.Add(new Deadlines() { DeadlineId = 535, Body = "The presentations will be held on Nov 11, 14, 18, and 21. You will need to form a group of 8-10 students. There are 8 candidate papers. Each group will present one paper. The titles of the papers are in the presentation sheet of goo.gl/ciiyEU Please form your group and select a paper. You will need to fill in your roll number against the title of the paper in the spreadsheet by the deadline. I will do the scheduling of presentations after that.\n You can also select a topic on a new technology. For that, you will need to get my permission beforehand", Title = "Homework2", LastUpdated = "Vinayak Naik updated 19 days ago", DueOn = "Due: Thursday, September 19 2013, 11:30 (Deadline passed)" });
-            return lstDeadlines;
+            objCourse = await objAPIBusinessLayer.RetrieveCoursesByCourseId(cookie, courseId);
+            return objCourse;
         }
 
-        private static List<Resource.Resources> GetResource()
+        private async Task<List<Deadlines>> RetrieveDeadlines()
         {
-            List<Resource.Resources> lstResource = new List<Resource.Resources>();
-            lstResource.Add(new Resource.Resources() { ResourceType = "Video Lectures", Title = "Scheduled For:", Body = "Java ME Chapter1" });
-            lstResource.Add(new Resource.Resources() { ResourceType = "Research papers", Title = "Scheduled For:", Date = Convert.ToDateTime("2/27/2009 12:12 PM"), Body = "Java ME Chapter2" });
-            lstResource.Add(new Resource.Resources() { ResourceType = "Tutorials", Title = "Scheduled For:", Date = Convert.ToDateTime("5/10/13 9:30 pm"), Body = "Java ME Chapter3" });
-            lstResource.Add(new Resource.Resources() { ResourceType = "Others", Title = "Scheduled For:", Date = Convert.ToDateTime("2/7/13 10:30 pm"), Body = "Java ME Chapter4" });
-            return lstResource;
-
+            return await objAPIBusinessLayer.RetrieveDeadlinesByCourseId(cookie, courseId);
         }
+
+        //private static List<Deadlines> GetDeadlines()
+        //{
+        //    List<Deadlines> lstDeadlines = new List<Deadlines>();
+        //    lstDeadlines.Add(new Deadlines() { DeadlineId = 535, Body = "The presentations will be held on Nov 11, 14, 18, and 21. You will need to form a group of 8-10 students. There are 8 candidate papers. Each group will present one paper. The titles of the papers are in the presentation sheet of goo.gl/ciiyEU Please form your group and select a paper. You will need to fill in your roll number against the title of the paper in the spreadsheet by the deadline. I will do the scheduling of presentations after that.\n You can also select a topic on a new technology. For that, you will need to get my permission beforehand", Title = "Presentations", LastUpdated = "Vinayak Naik updated 1 day ago", DueOn = "Due: Monday, October 7 2013, 11:30 (7 days left)" });
+        //    lstDeadlines.Add(new Deadlines() { DeadlineId = 535, Body = "The presentations will be held on Nov 11, 14, 18, and 21. You will need to form a group of 8-10 students. There are 8 candidate papers. Each group will present one paper. The titles of the papers are in the presentation sheet of goo.gl/ciiyEU Please form your group and select a paper. You will need to fill in your roll number against the title of the paper in the spreadsheet by the deadline. I will do the scheduling of presentations after that.\n You can also select a topic on a new technology. For that, you will need to get my permission beforehand", Title = "MidSem Demo", LastUpdated = "Vinayak Naik updated 2 days ago ", DueOn = "Due: Tuesday, October 22 2013, 11:00 (22 days left)" });
+        //    lstDeadlines.Add(new Deadlines() { DeadlineId = 535, Body = "The presentations will be held on Nov 11, 14, 18, and 21. You will need to form a group of 8-10 students. There are 8 candidate papers. Each group will present one paper. The titles of the papers are in the presentation sheet of goo.gl/ciiyEU Please form your group and select a paper. You will need to fill in your roll number against the title of the paper in the spreadsheet by the deadline. I will do the scheduling of presentations after that.\n You can also select a topic on a new technology. For that, you will need to get my permission beforehand", Title = "Homework2", LastUpdated = "Vinayak Naik updated 19 days ago", DueOn = "Due: Thursday, September 19 2013, 11:30 (Deadline passed)" });
+        //    return lstDeadlines;
+        //}
+
+        //private static List<Resource.Resources> GetResource()
+        //{
+        //    List<Resource.Resources> lstResource = new List<Resource.Resources>();
+        //    lstResource.Add(new Resource.Resources() { ResourceType = "Video Lectures", Title = "Scheduled For:", Body = "Java ME Chapter1" });
+        //    lstResource.Add(new Resource.Resources() { ResourceType = "Research papers", Title = "Scheduled For:", Date = Convert.ToDateTime("2/27/2009 12:12 PM"), Body = "Java ME Chapter2" });
+        //    lstResource.Add(new Resource.Resources() { ResourceType = "Tutorials", Title = "Scheduled For:", Date = Convert.ToDateTime("5/10/13 9:30 pm"), Body = "Java ME Chapter3" });
+        //    lstResource.Add(new Resource.Resources() { ResourceType = "Others", Title = "Scheduled For:", Date = Convert.ToDateTime("2/7/13 10:30 pm"), Body = "Java ME Chapter4" });
+        //    return lstResource;
+
+        //}
 
         private static List<Discussions> GetDiscussion()
         {

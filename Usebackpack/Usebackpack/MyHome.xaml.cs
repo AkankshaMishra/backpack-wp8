@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using Usebackpack.Business_Layer;
 using Usebackpack.Resources;
 using Usebackpack.Model;
+using Usebackpack.Common;
 
 namespace Usebackpack
 {
@@ -27,7 +28,12 @@ namespace Usebackpack
             //BuildLocalizedApplicationBar();
         }
 
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Retrieving the stored data on page load
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             var cookieApp = App.Current as App;
             cookie = cookieApp.Cookie;
@@ -35,24 +41,44 @@ namespace Usebackpack
             user = userApp.User;
         }
 
+        /// <summary>
+        /// Navigate to My Course page on click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MyCourse_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Uri(Constant.MYCOURSES,UriKind.Relative));
         }
 
+        /// <summary>
+        /// Navigate to My Profile page on click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MyProfile_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Uri(Constant.MYPROFILE, UriKind.Relative));
         }
 
+        /// <summary>
+        /// Navigate to Notification page on click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Notification_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Uri(Constant.NOTIFICATION, UriKind.Relative));
         }
 
+        /// <summary>
+        /// Navigate to Settings page on click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Uri(Constant.SETTINGS, UriKind.Relative));
         }
 
         // Sample code for building a localized ApplicationBar

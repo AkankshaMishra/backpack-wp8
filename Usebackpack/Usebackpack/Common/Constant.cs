@@ -23,6 +23,7 @@ namespace Usebackpack.Common
         public const string MYPROFILE="/MyProfile.xaml";
         public const string NOTIFICATION = "/Notification.xaml";
         public const string SETTINGS = "/Settings.xaml";
+        public const string COURSEDETAIL = "/CourseDetail.xaml";
         public const string BASEURL = "http://www.usebackpack.com";
         public const string BACKPACKSIGNIN = "/api/signin";
         public const string RETRIEVEUSERID = "/api/currentuser";

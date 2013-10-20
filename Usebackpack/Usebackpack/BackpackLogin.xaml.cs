@@ -67,13 +67,9 @@ namespace Usebackpack
                     objUser=await objAPIBusinessLayer.RetrieveUserDetailsByUserId(objUser.UserId, cookie);
 
                     int courseId = 2;
-                    Course objCourse = new Course();
-                    objCourse = await objAPIBusinessLayer.RetrieveCoursesByCourseId(cookie, courseId);
-                   
                     lstResources = await objAPIBusinessLayer.RetrieveResourcesByCourseId(cookie, courseId);
 
-                    //List<Deadlines> lstDeadlines = new List<Deadlines>();
-                    //lstDeadlines=await objAPIBusinessLayer.RetrieveDeadlinesByCourseId(cookie, courseId);
+                    
 
                     //Setting the application level variable--Cookie
                     var cookieApp = App.Current as App;

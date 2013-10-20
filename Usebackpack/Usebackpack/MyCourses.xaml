@@ -39,10 +39,15 @@
                     <TextBlock HorizontalAlignment="Right">Leave Course</TextBlock>
                 </StackPanel>
                 <StackPanel x:Name="spMyCourses" Grid.Row="1">
-                    <Button Height="Auto" Content="Mobile Computing"></Button>
-                    <Button Height="Auto" Content="Cellular Data Network"></Button>
-                    <Button Height="Auto" Content="Program Analysis"></Button>
-                    <Button Height="Auto" Content="Graduate Algorithm"></Button>
+                    <toolkit:LongListMultiSelector ItemsSource="{Binding}" x:Name="lstCourses">
+                        <toolkit:LongListMultiSelector.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,10,0,0">
+                                    <Button Content="{Binding CourseName}" Name="btnCourseName" Click="btnCourseName_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:LongListMultiSelector.ItemTemplate>
+                    </toolkit:LongListMultiSelector>
                 </StackPanel>
                 <!--<toolkit:LongListMultiSelector
                      ItemsSource="{Binding}"

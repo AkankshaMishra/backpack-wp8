@@ -20,46 +20,46 @@
         <phone:Pivot Title="Mobile Computing: CSE-535">
             <!--Pivot item one-->
             <phone:PivotItem Header="Course Info">
-                <Grid x:Name="CourseInfoLayout">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource PhoneTextLargeStyle}">Overview</TextBlock>
-                        <TextBlock Margin="13,10,0,0" TextWrapping="Wrap">Mobile phone OS, Applications, and Wireless Networks</TextBlock>
-                    </StackPanel>
+                <ScrollViewer>
+                    <Grid x:Name="CourseInfoLayout">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Overview"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtOverview"></TextBlock>
+                        </StackPanel>
 
-                    <StackPanel Grid.Row="1" Margin="0,10,0,0">
-                        <TextBlock Style="{StaticResource PhoneTextLargeStyle}">Class Timings</TextBlock>
-                        <TextBlock Margin="13,10,0,0" TextWrapping="Wrap">M and Th 11:30-1 in C02</TextBlock>
-                    </StackPanel>
-                    <StackPanel Grid.Row="2" Margin="0,10,0,0">
-                        <TextBlock Style="{StaticResource PhoneTextLargeStyle}">Instructor Office Hours</TextBlock>
-                        <TextBlock Margin="13,10,0,0" TextWrapping="Wrap">Tu 11-1 in B301</TextBlock>
-                    </StackPanel>
-                    <StackPanel Grid.Row="3" Margin="0,10,0,0">
-                        <TextBlock Style="{StaticResource PhoneTextLargeStyle}">Evaluation</TextBlock>
-                        <TextBlock Margin="13,10,0,0" TextWrapping="Wrap">
-                            Homework and/or programming assignments, at the most 1 per week (10%)
-                        </TextBlock>
-                    </StackPanel>
-                    <StackPanel Grid.Row="4" Margin="0,10,0,0">
-                        <TextBlock Style="{StaticResource PhoneTextLargeStyle}">TextBooks</TextBlock>
-                        <TextBlock Margin="13,10,0,0" TextWrapping="Wrap">
-                           Jonathan Knudsen, Kicking Butt With MIDP And MSA: Creating Great Mobile Applications, Prentice Hall, 2007
-                        </TextBlock>
-                    </StackPanel>
-                </Grid>
+                        <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Class Timings"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtClassTiming"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Margin="0,10,0,0">
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Instructor Office Hours"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtOfficeHours"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Margin="0,10,0,0">
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Evaluation"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtEvaluation">
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" Margin="0,10,0,0">
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="TextBooks"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtTextBooks">
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
             </phone:PivotItem>
 
             <!--Pivot item two-->
             <phone:PivotItem Header="Deadlines">
                 <Grid>
-                    <toolkit:LongListMultiSelector ItemsSource="{Binding}" x:Name="lstCourse">
+                    <toolkit:LongListMultiSelector ItemsSource="{Binding}" x:Name="lstDeadlines">
                         <toolkit:LongListMultiSelector.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,10,0,0">
@@ -69,12 +69,11 @@
                             </DataTemplate>
                         </toolkit:LongListMultiSelector.ItemTemplate>
                     </toolkit:LongListMultiSelector>
-
                 </Grid>
             </phone:PivotItem>
-           
+
             <!--Pivot item three-->
-           <phone:PivotItem Header="Resources">
+            <phone:PivotItem Header="Resources">
                 <Grid>
                     <toolkit:LongListMultiSelector ItemsSource="{Binding}" x:Name="lstResource" Margin="0,-9,0,9">
                         <toolkit:LongListMultiSelector.ItemTemplate>
@@ -90,7 +89,7 @@
                         </toolkit:LongListMultiSelector.ItemTemplate>
                     </toolkit:LongListMultiSelector>
                 </Grid>
-            </phone:PivotItem> 
+            </phone:PivotItem>
 
             <!--Pivot item four-->
             <phone:PivotItem Header="Discussions">
@@ -108,5 +107,5 @@
             </phone:PivotItem>
         </phone:Pivot>
     </Grid>
-    
+
 </phone:PhoneApplicationPage>
