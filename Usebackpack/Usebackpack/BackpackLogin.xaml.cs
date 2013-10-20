@@ -75,9 +75,14 @@ namespace Usebackpack
                     //List<Deadlines> lstDeadlines = new List<Deadlines>();
                     //lstDeadlines=await objAPIBusinessLayer.RetrieveDeadlinesByCourseId(cookie, courseId);
 
-                    //Setting the application level variable
+                    //Setting the application level variable--Cookie
                     var cookieApp = App.Current as App;
                     cookieApp.Cookie = cookie;
+
+                    //Setting the application level variable--User object
+                    var userApp = App.Current as App;
+                    userApp.User = objUser;
+
                     //Navigate to Home page
                     NavigationService.Navigate(new Uri(Constant.MYHOME, UriKind.Relative));
                     

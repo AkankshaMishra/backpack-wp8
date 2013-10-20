@@ -6,6 +6,7 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Usebackpack.Model;
 using Usebackpack.Resources;
 
 namespace Usebackpack
@@ -14,7 +15,7 @@ namespace Usebackpack
     {
         public string Cookie { get; set; }
 
-        public int UserId { get; set; }
+        public Users User { get; set; }
 
         public int CourseId { get; set; }
 
