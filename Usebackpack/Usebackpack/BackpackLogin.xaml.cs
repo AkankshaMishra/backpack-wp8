@@ -86,9 +86,9 @@ namespace Usebackpack
                     //Navigate to Home page
                     NavigationService.Navigate(new Uri(Constant.MYHOME, UriKind.Relative));
                     
+
                 }
             }
         }
-
     }
 }
