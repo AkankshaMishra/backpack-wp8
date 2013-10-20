@@ -25,11 +25,13 @@ namespace Usebackpack.Model
         [DataMember(Name="timestamp")]
         public string LastUpdated { get; set; }
 
-       [DataMember(Name="endDateTime")]
+        [DataMember(Name="endDateTime")]
         public string DueOn { get; set; }
 
         [DataMember(Name="user_id")]
-       public Users User { get; set; }
+        public string UserId { get; set; }
+
+        public Users User { get; set; }
 
 
     }

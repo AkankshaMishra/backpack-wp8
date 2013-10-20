@@ -51,6 +51,7 @@ namespace Usebackpack
             txtClassTiming.Text = objCourse.Timings;
 
             listDeadlines = await RetrieveDeadlines();
+            lstDeadlines.ItemsSource = listDeadlines;
         }
 
         private async Task<Course> RetrieveCourseDetails()
