@@ -18,6 +18,7 @@ namespace Usebackpack
     {
         private IAPIBusinessLayer objAPIServiceLayer = APIBusinessLayer.APIBusinessInstance();
         string cookie = null;
+        Users user = null;
         public CourseDetail()
         {
             InitializeComponent();
@@ -32,6 +33,8 @@ namespace Usebackpack
         {
             var cookieApp = App.Current as App;
             cookie = cookieApp.Cookie;
+            var userApp = App.Current as App;
+            user = userApp.User;
         }
 
         private static List<Deadlines> GetDeadlines()
