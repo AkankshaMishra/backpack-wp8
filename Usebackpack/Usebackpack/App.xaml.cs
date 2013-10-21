@@ -19,6 +19,8 @@ namespace Usebackpack
 
         public int CourseId { get; set; }
 
+        public int CourseCount { get; set; }
+
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.

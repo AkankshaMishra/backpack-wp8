@@ -88,6 +88,9 @@ namespace Usebackpack.Business_Layer
                 userDetails.UserCourses.Add(objCourses);
 
             }
+            //counting the no. of courses
+            var courseCountApp = App.Current as App;
+            courseCountApp.CourseCount = courseIdArray.Length;
             return userDetails;
         }
 

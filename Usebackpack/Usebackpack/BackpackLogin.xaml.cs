@@ -66,11 +66,6 @@ namespace Usebackpack
 
                     objUser=await objAPIBusinessLayer.RetrieveUserDetailsByUserId(objUser.UserId, cookie);
 
-                    int courseId = 2;
-                    lstResources = await objAPIBusinessLayer.RetrieveResourcesByCourseId(cookie, courseId);
-
-                    
-
                     //Setting the application level variable--Cookie
                     var cookieApp = App.Current as App;
                     cookieApp.Cookie = cookie;
@@ -81,8 +76,6 @@ namespace Usebackpack
 
                     //Navigate to Home page
                     NavigationService.Navigate(new Uri(Constant.MYHOME, UriKind.Relative));
-                    
-
                 }
             }
         }
