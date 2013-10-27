@@ -53,15 +53,15 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Manage Email Notification" Grid.Row="0"></TextBlock>
-                        <toolkit:LongListMultiSelector Name="llsEmailNotification" ItemsSource="{Binding}" Grid.Row="1" Margin="0,10,0,0">
-                            <toolkit:LongListMultiSelector.ItemTemplate>
+                        <phone:LongListSelector Name="llsEmailNotification" ItemsSource="{Binding}" Grid.Row="1" Margin="0,10,0,0">
+                            <phone:LongListSelector.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox>
                                         <TextBlock Text="{Binding EmailNotificationText}" TextWrapping="Wrap"></TextBlock>
                                     </CheckBox>
                                 </DataTemplate>
-                            </toolkit:LongListMultiSelector.ItemTemplate>
-                        </toolkit:LongListMultiSelector>
+                            </phone:LongListSelector.ItemTemplate>
+                        </phone:LongListSelector>
                         <TextBlock Text="Manage Push Notification" Grid.Row="2"></TextBlock>
                         <CheckBox Grid.Row="3" Margin="22,0,0,0">Enable/Disable Push Notification</CheckBox>
                         <Button Grid.Row="4">Save Preferences</Button>

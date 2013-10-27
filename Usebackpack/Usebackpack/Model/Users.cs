@@ -69,8 +69,8 @@ namespace Usebackpack.Model
         [DataMember(Name="coursenames")]
         public string APICourseName { get; set; }
 
-        [DataMember(Name="upcomingdeadlines")]
-        public string UpcomingDeadlines { get; set; }
+        [DataMember(Name ="upcomingdeadlines")]
+        public List<UpcomingDeadlines> UpcomingDeadlines { get; set; }
 
         public List<Course> UserCourses { get; set; }
     }

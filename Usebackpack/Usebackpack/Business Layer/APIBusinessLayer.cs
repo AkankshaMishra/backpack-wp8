@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Usebackpack.Model;
 using Usebackpack.Common;
 using Usebackpack.Service_Layer;
+using System.Globalization;
 
 namespace Usebackpack.Business_Layer
 {
@@ -91,6 +92,14 @@ namespace Usebackpack.Business_Layer
             //counting the no. of courses
             var courseCountApp = App.Current as App;
             courseCountApp.CourseCount = courseIdArray.Length;
+
+            //foreach (var item in userDetails.UpcomingDeadlines)
+            for(int i=0;i<userDetails.UpcomingDeadlines.Count;i++)
+            {
+                DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0,DateTimeKind.Local).AddSeconds(Convert.ToDouble(userDetails.UpcomingDeadlines[i].EndTime)).ToLocalTime();
+                DateTime epochIST = epoch.AddSeconds(19800);
+                userDetails.UpcomingDeadlines[i].DeadLineTime = epochIST;
+            }
             return userDetails;
         }
 
@@ -136,6 +145,90 @@ namespace Usebackpack.Business_Layer
         public async Task<List<Usebackpack.Model.Resources>> RetrieveResourcesByCourseId(string cookie,int courseId)
         {
             return await objAPIServiceLayer.RetrieveResourcesByCourseId(cookie, courseId);
+        }
+
+        /// <summary>
+        /// Method to delete discussion
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="discussionId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteDiscussion(string cookie, int discussionId)
+        {
+            return await objAPIServiceLayer.DeleteDiscussion(cookie, discussionId);
+        }
+
+        /// <summary>
+        /// Method to delete resources
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="resourceId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteResources(string cookie, int resourceId)
+        {
+            return await objAPIServiceLayer.DeleteResources(cookie, resourceId);
+        }
+
+        /// <summary>
+        /// Method to delete deadlines
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="deadlineId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteDeadlines(string cookie, int deadlineId)
+        {
+            return await objAPIServiceLayer.DeleteDeadlines(cookie, deadlineId);
+        }
+
+        /// <summary>
+        /// Method to delete reply
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="replyId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteReply(string cookie, int replyId)
+        {
+            return await objAPIServiceLayer.DeleteReply(cookie, replyId);
+        }
+
+        /// <summary>
+        /// Method to delete comment
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteComment(string cookie, int commentId)
+        {
+            return await objAPIServiceLayer.DeleteComment(cookie, commentId);
+        }
+
+        /// <summary>
+        /// Method to post deadline
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="courseId"></param>
+        /// <param name="userId"></param>
+        /// <param name="datePart"></param>
+        /// <param name="timePart"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<int> PostDeadline(string title, string courseId, string userId, string datePart, string timePart, string cookie)
+        {
+            return await objAPIServiceLayer.PostDeadline(title, courseId, userId, datePart, timePart, cookie);
+        }
+
+        /// <summary>
+        /// Method to post discussion
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="userId"></param>
+        /// <param name="body"></param>
+        /// <param name="subject"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<int> PostDiscussion(string courseId, string userId, string body, string subject, string cookie)
+        {
+            return await objAPIServiceLayer.PostDiscussion(courseId, userId, body, subject, cookie);
         }
         
     }

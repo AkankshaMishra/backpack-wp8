@@ -152,6 +152,7 @@ namespace Usebackpack.Service_Layer
                     string responseUserDetails = await userDetailsClient.GetStringAsync(new Uri(Constant.BASEURL + Constant.RETRIEVEUSERDETAILSBYUSERID + userId + "", UriKind.Absolute));
 
                     Users userDetails = JsonConvert.DeserializeObject<Users>(responseUserDetails);
+       
                     return userDetails;
                 }
             }
@@ -273,5 +274,170 @@ namespace Usebackpack.Service_Layer
                 throw;
             }
         }
+
+        /// <summary>
+        /// Method to delete discussions
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="discussionId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteDiscussion(string cookie, int discussionId)
+        {
+            HttpClient deleteDiscussionClient = new HttpClient();
+            deleteDiscussionClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+            deleteDiscussionClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+            HttpResponseMessage responseDeleteDiscussion = await deleteDiscussionClient.DeleteAsync(Constant.BASEURL+Constant.DELETEDISCUSSION + discussionId);
+            string responseStringDeleteDiscussion = await responseDeleteDiscussion.Content.ReadAsStringAsync();
+            return Convert.ToInt32(responseStringDeleteDiscussion);
+        }
+
+        /// <summary>
+        /// Method to delete resources
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="resourceId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteResources(string cookie, int resourceId)
+        {
+            HttpClient deleteResourceClient = new HttpClient();
+
+            deleteResourceClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+            deleteResourceClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+            HttpResponseMessage responseMessageDeleteResource = await deleteResourceClient.DeleteAsync(Constant.BASEURL+Constant.DELETERESOURCES+resourceId);
+
+            string responseDeleteResource = await responseMessageDeleteResource.Content.ReadAsStringAsync();
+
+            return Convert.ToInt32(responseDeleteResource);
+           
+        }
+
+        /// <summary>
+        /// Method to delete deadlines
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="deadlineId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteDeadlines(string cookie, int deadlineId)
+        {
+            HttpClient deleteDeadlinesClient = new HttpClient();
+
+            deleteDeadlinesClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+            deleteDeadlinesClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+            HttpResponseMessage responseMessageDeleteDeadlines = await deleteDeadlinesClient.DeleteAsync(Constant.BASEURL+Constant.DELETEDEADLINES+deadlineId);
+
+            string responseDeleteDeadlines = await responseMessageDeleteDeadlines.Content.ReadAsStringAsync();
+            return Convert.ToInt32(responseDeleteDeadlines);
+        }
+
+        /// <summary>
+        /// Methods to delete reply
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="replyId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteReply(string cookie,int replyId)
+        {
+
+            HttpClient deleteReplyClient = new HttpClient();
+
+            deleteReplyClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+            deleteReplyClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+            HttpResponseMessage responseMessageDeleteReply = await deleteReplyClient.DeleteAsync(Constant.BASEURL+Constant.DELETEREPLY+replyId);
+
+            string responseDeleteReply = await responseMessageDeleteReply.Content.ReadAsStringAsync();
+
+            return Convert.ToInt32(responseDeleteReply);
+
+        }
+
+        /// <summary>
+        /// Methods to delete comment
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
+        public async Task<int> DeleteComment(string cookie, int commentId)
+        {
+            HttpClient deleteCommentClient = new HttpClient();
+
+            deleteCommentClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+            deleteCommentClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+
+            HttpResponseMessage responseMessageDeleteComment = await deleteCommentClient.DeleteAsync(Constant.BASEURL+Constant.DELETECOMMENT+commentId);
+
+            string responseDeleteComment = await responseMessageDeleteComment.Content.ReadAsStringAsync();
+
+            return Convert.ToInt32(responseDeleteComment);
+        }
+
+        /// <summary>
+        /// Method to post a deadline
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="courseId"></param>
+        /// <param name="userId"></param>
+        /// <param name="datePart"></param>
+        /// <param name="timePart"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<int> PostDeadline(string title, string courseId, string userId, string datePart, string timePart, string cookie)
+        {
+            HttpClient postDeadlineClient = new HttpClient();
+
+            postDeadlineClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+            postDeadlineClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+            Dictionary<string, string> dictPostDeadlines = new Dictionary<string, string>();
+
+            dictPostDeadlines.Add("title", title);
+            dictPostDeadlines.Add("course_Id", courseId);
+            dictPostDeadlines.Add("user_Id", userId);
+            dictPostDeadlines.Add("date_part", datePart);
+            dictPostDeadlines.Add("time_part", timePart);
+
+            HttpContent postDeadlineContent = new FormUrlEncodedContent(dictPostDeadlines);
+
+            HttpResponseMessage responseMessagePostDeadlines = await postDeadlineClient.PostAsync(Constant.BASEURL+Constant.POSTDEADLINES, postDeadlineContent);
+
+            string responsePostDeadlines = await responseMessagePostDeadlines.Content.ReadAsStringAsync();
+
+            return Convert.ToInt32(responsePostDeadlines);
+        }
+
+        /// <summary>
+        /// Method to post a new discussion
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <param name="userId"></param>
+        /// <param name="body"></param>
+        /// <param name="subject"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<int> PostDiscussion(string courseId,string userId,string body,string subject,string cookie)
+        {
+            HttpClient postDiscussionClient = new HttpClient();
+
+            postDiscussionClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+            postDiscussionClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+            Dictionary<string, string> dicPostDiscussion = new Dictionary<string, string>();
+            dicPostDiscussion.Add("course_Id", courseId);
+            dicPostDiscussion.Add("user_Id", userId);
+            dicPostDiscussion.Add("body", body);
+            dicPostDiscussion.Add("subject", subject);
+            HttpContent postDiscussionContent = new FormUrlEncodedContent(dicPostDiscussion);
+
+            HttpResponseMessage responseMessagePostDiscussion = await postDiscussionClient.PostAsync(Constant.BASEURL+Constant.POSTDISCUSSION, postDiscussionContent);
+
+            string responsePostDiscussion = await responseMessagePostDiscussion.Content.ReadAsStringAsync();
+
+            return Convert.ToInt32(responsePostDiscussion);
+        }
+
     }    
 }

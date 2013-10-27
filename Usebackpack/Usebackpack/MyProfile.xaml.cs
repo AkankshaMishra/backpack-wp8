@@ -4,10 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Usebackpack.Business_Layer;
+using Usebackpack.Common;
 using Usebackpack.Model;
 
 namespace Usebackpack
@@ -44,6 +46,10 @@ namespace Usebackpack
             var courseCountApp = App.Current as App;
             courseCount = courseCountApp.CourseCount;
             //Binding the controls
+            imgProfilePic.Source =  new BitmapImage(new Uri(@Constant.BASEURL + user.AvtarFileName));
+            imgProfilePic.Width = 100;
+            imgProfilePic.Height = 100;
+            tbName.Text = user.FirstName + " " +user.LastName;
             tbRollNo.Text = user.RollNo;
             tbEmailId.Text = user.EmailId;
             //tbBirthday.Text = Convert.ToString(user.Birthday);

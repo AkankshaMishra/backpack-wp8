@@ -11,6 +11,9 @@ using Usebackpack.Model;
 using Resource = Usebackpack.Model;
 using Usebackpack.Business_Layer;
 using System.Threading.Tasks;
+using Usebackpack.Common;
+using System.Windows.Data;
+using System.Globalization;
 
 
 namespace Usebackpack
@@ -47,27 +50,90 @@ namespace Usebackpack
 
             //course info binding
             await RetrieveCourseDetails();
-            txtOverview.Text = objCourse.Overview;
-            txtTextBooks.Text = objCourse.TextBooks;
+            if (objCourse.Overview==null)
+            {
+                tbOverview.Visibility = System.Windows.Visibility.Collapsed;
+                txtOverview.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                txtOverview.Text = objCourse.Overview;
+            }
+
+            if (objCourse.TextBooks==null)
+            {
+                tbTextBooks.Visibility = System.Windows.Visibility.Collapsed;
+                txtTextBooks.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                txtTextBooks.Text = objCourse.TextBooks;
+            }
+
+            if (objCourse.OfficeHours==null)
+            {
+                tbOfficeHours.Visibility = System.Windows.Visibility.Collapsed;
+                txtOfficeHours.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
             txtOfficeHours.Text = objCourse.OfficeHours;
-            txtEvaluation.Text = objCourse.Evaluation;
-            txtClassTiming.Text = objCourse.Timings;
+            }
+
+            if (objCourse.Evaluation==null)
+            {
+                tbEvaluation.Visibility = System.Windows.Visibility.Collapsed;
+                txtEvaluation.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                txtEvaluation.Text = objCourse.Evaluation;
+            }
+
+            if (objCourse.Timings==null)
+            {
+                tbClassTimings.Visibility = System.Windows.Visibility.Collapsed;
+                txtClassTiming.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                txtClassTiming.Text = objCourse.Timings;
+            }
+            
 
             //course info pivot binding
             CourseInfoPivot.Title = objCourse.CourseName + "-" + objCourse.CourseCode;
 
             //deadlines binding
             listDeadlines = await RetrieveDeadlines();
-            List<Deadlines> sortedDeadlines = new List<Deadlines>();
-            //sorting the deadlines based on DueOn date
-            sortedDeadlines=listDeadlines.OrderByDescending(s => s.DueOn).ToList<Deadlines>();
-            lstDeadlines.ItemsSource = sortedDeadlines;
+            if (listDeadlines.Count != 0)
+            {
+                List<Deadlines> sortedDeadlines = new List<Deadlines>();
+                //sorting the deadlines based on DueOn date
+                sortedDeadlines = listDeadlines.OrderByDescending(s => s.DueOn).ToList<Deadlines>();
+                lstDeadlines.ItemsSource = sortedDeadlines;
+            }
+            else
+            {
+                tbNoDeadLines.Visibility = System.Windows.Visibility.Visible;
+                tbNoDeadLines.Text = Constant.NOCOURSEDEADLINES;
+                lstDeadlines.Visibility = System.Windows.Visibility.Collapsed;
+            }
 
             //Resources bonding
             listResources = await RetrieveResources();
-            //List<Model.Resources> sortedResources = new List<Model.Resources>();
-            var sortedResources = listResources.GroupBy(s => s.ResourceType).ToList();
-            lstResource.ItemsSource = listResources;
+            if (listResources.Count != 0)
+            {
+                //List<Model.Resources> sortedResources = new List<Model.Resources>();
+                var sortedResources = listResources.GroupBy(s => s.ResourceType).ToList();
+                lstResource.ItemsSource = listResources;
+            }
+            else
+            {
+                tbNoResources.Visibility = System.Windows.Visibility.Visible;
+                tbNoResources.Text = Constant.NORESOURCES;
+                lstResource.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -96,6 +162,32 @@ namespace Usebackpack
         private async Task<List<Model.Resources>> RetrieveResources()
         {
             return await objAPIBusinessLayer.RetrieveResourcesByCourseId(cookie, courseId);
+        }
+
+        private void hlDeadlineTitle_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri(Constant.DEADLINEDETAILS, UriKind.Relative));
+        }
+    }
+
+    //Delete this if its nt wrking
+    public class StringLengthVisiblityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return Visibility.Collapsed;
+            }
+            else
+            {
+                return Visibility.Visible;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

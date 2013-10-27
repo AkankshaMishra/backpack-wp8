@@ -48,7 +48,7 @@ namespace Usebackpack
         /// <param name="e"></param>
         private void MyCourse_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri(Constant.MYCOURSES,UriKind.Relative));
+            NavigationService.Navigate(new Uri(Constant.COURSESUPCOMINGDEADLINES, UriKind.Relative));
         }
 
         /// <summary>

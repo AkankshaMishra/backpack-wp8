@@ -6,7 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:local="clr-namespace:Usebackpack"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -14,6 +14,9 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
+    <phone:PhoneApplicationPage.Resources>
+        <local:StringLengthVisiblityConverter x:Key="converter"></local:StringLengthVisiblityConverter>
+    </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
@@ -28,27 +31,44 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel>
-                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Overview"></TextBlock>
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Overview" x:Name="tbOverview"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtOverview"></TextBlock>
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Margin="0,10,0,0">
-                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Class Timings"></TextBlock>
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Class Timings" x:Name="tbClassTimings"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtClassTiming"></TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Margin="0,10,0,0">
-                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Instructor Office Hours"></TextBlock>
-                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtOfficeHours"></TextBlock>
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Course Credits" x:Name="tbCourseCredits"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtCourseCredits"></TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Row="3" Margin="0,10,0,0">
-                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Evaluation"></TextBlock>
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Instructor" x:Name="tbInstructor"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtInstructor"></TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Margin="0,10,0,0">
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Instructor Office Hours" x:Name="tbOfficeHours"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtOfficeHours"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="5" Margin="0,10,0,0">
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Teaching Assisstants" x:Name="tbTA"></TextBlock>
+                            <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtTA"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="6" Margin="0,10,0,0">
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Evaluation" x:Name="tbEvaluation"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtEvaluation">
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel Grid.Row="4" Margin="0,10,0,0">
-                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="TextBooks"></TextBlock>
+
+                        <StackPanel Grid.Row="7" Margin="0,10,0,0">
+                            <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="TextBooks" x:Name="tbTextBooks"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtTextBooks">
                             </TextBlock>
                         </StackPanel>
@@ -58,51 +78,64 @@
 
             <!--Pivot item two-->
             <phone:PivotItem Header="Deadlines">
-                <Grid>
-                    <toolkit:LongListMultiSelector ItemsSource="{Binding}" x:Name="lstDeadlines">
-                        <toolkit:LongListMultiSelector.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,10,0,0">
-                                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap"></TextBlock>
-                                    <TextBlock Text="{Binding DueOn}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </toolkit:LongListMultiSelector.ItemTemplate>
-                    </toolkit:LongListMultiSelector>
-                </Grid>
+                <ScrollViewer>
+                    <Grid>
+                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstDeadlines">
+                            <phone:LongListSelector.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,10,0,0">
+                                        <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap"></TextBlock>
+                                        <!--<HyperlinkButton Content="{Binding Title}" HorizontalAlignment="Left" x:Name="hlDeadlineTitle" Click="hlDeadlineTitle_Click">
+                                    </HyperlinkButton>-->
+                                        <TextBlock Text="{Binding DueOn}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </phone:LongListSelector.ItemTemplate>
+                        </phone:LongListSelector>
+                        <TextBlock x:Name="tbNoDeadLines" Visibility="Collapsed"></TextBlock>
+                    </Grid>
+                </ScrollViewer>
             </phone:PivotItem>
 
             <!--Pivot item three-->
             <phone:PivotItem Header="Resources">
-                <Grid>
-                    <toolkit:LongListMultiSelector ItemsSource="{Binding}" x:Name="lstResource" Margin="0,-9,0,9">
-                        <toolkit:LongListMultiSelector.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,10,0,0">
-                                    <TextBlock Text="{Binding ResourceType}" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap"></TextBlock>
-                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                                    <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                                    <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                                </StackPanel>
-                            </DataTemplate>
-                        </toolkit:LongListMultiSelector.ItemTemplate>
-                    </toolkit:LongListMultiSelector>
-                </Grid>
+                <ScrollViewer>
+                    <Grid>
+                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstResource" Margin="0,-9,0,9">
+                            <phone:LongListSelector.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,10,0,0">
+                                        <TextBlock Text="{Binding ResourceType}" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap"></TextBlock>
+                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        <Button x:Name="btnResourceDownload" Content="Download" Width="200" HorizontalAlignment="Left" Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}"></Button>
+                                        <!--<Button x:Name="btnResourceDownload" Content="Download" Width="200" HorizontalAlignment="Left" Tag="{Binding AttachementFileName}"></Button>-->
+                                    </StackPanel>
+                                </DataTemplate>
+                            </phone:LongListSelector.ItemTemplate>
+                        </phone:LongListSelector>
+                        <TextBlock x:Name="tbNoResources" Visibility="Collapsed"></TextBlock>
+                    </Grid>
+                </ScrollViewer>
             </phone:PivotItem>
 
             <!--Pivot item four-->
             <phone:PivotItem Header="Discussions">
-                <Grid>
-                    <toolkit:LongListMultiSelector ItemsSource="{Binding}" x:Name="lstDiscussion">
-                        <toolkit:LongListMultiSelector.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                                    <HyperlinkButton Content="{Binding Subject}" FontSize="30"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </toolkit:LongListMultiSelector.ItemTemplate>
-                    </toolkit:LongListMultiSelector>
-                </Grid>
+                <ScrollViewer>
+                    <Grid>
+                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstDiscussion">
+                            <phone:LongListSelector.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                        <HyperlinkButton Content="{Binding Subject}" FontSize="30"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </phone:LongListSelector.ItemTemplate>
+                        </phone:LongListSelector>
+                    </Grid>
+                </ScrollViewer>
             </phone:PivotItem>
         </phone:Pivot>
     </Grid>

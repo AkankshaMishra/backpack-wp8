@@ -104,10 +104,14 @@
     <Compile Include="CourseDetail.xaml.cs">
       <DependentUpon>CourseDetail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CoursesUpcomingDeadlines.xaml.cs">
+      <DependentUpon>CoursesUpcomingDeadlines.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeadlineDetails.xaml.cs">
       <DependentUpon>DeadlineDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Model\UpcomingDeadlines.cs" />
     <Compile Include="MyHome.xaml.cs">
       <DependentUpon>MyHome.xaml</DependentUpon>
     </Compile>
@@ -156,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CourseDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CoursesUpcomingDeadlines.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

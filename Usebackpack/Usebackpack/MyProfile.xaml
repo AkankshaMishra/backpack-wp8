@@ -37,16 +37,18 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Akanksha Mishra" Style="{StaticResource PhoneTextExtraLargeStyle}" TextWrapping="Wrap" x:Name="tbName" Grid.ColumnSpan="2"/>
-                <TextBlock Grid.Row="1" Text="Roll No." Style="{StaticResource PhoneTextLargeStyle}" Margin="10,30,0,0"></TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" Margin="11,30,0,0" TextWrapping="Wrap" x:Name="tbRollNo"/>
-                <TextBlock Grid.Row="2" Text="Email" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
-                <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" x:Name="tbEmailId"/>
+                <Image x:Name="imgProfilePic"></Image>
+                <TextBlock x:Name="tbName" Style="{StaticResource PhoneTextExtraLargeStyle}" TextWrapping="Wrap"  Grid.ColumnSpan="2" Grid.Row="1"/>
+                <TextBlock Grid.Row="2" Text="Roll No." Style="{StaticResource PhoneTextLargeStyle}" Margin="10,30,0,0"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" Margin="11,30,0,0" TextWrapping="Wrap" x:Name="tbRollNo"/>
+                <TextBlock Grid.Row="3" Text="Email" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" x:Name="tbEmailId"/>
                 <!--<TextBlock Grid.Row="3" Text="Born on" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
                 <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" x:Name="tbBirthday" />-->
                 <TextBlock Grid.Row="4" Text="Courses" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
