@@ -283,13 +283,23 @@ namespace Usebackpack.Service_Layer
         /// <returns></returns>
         public async Task<int> DeleteDiscussion(string cookie, int discussionId)
         {
-            HttpClient deleteDiscussionClient = new HttpClient();
-            deleteDiscussionClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
-            deleteDiscussionClient.DefaultRequestHeaders.Add("Cookie", cookie);
+            try
+            {
+                using (HttpClient deleteDiscussionClient = new HttpClient())
+                {
+                    deleteDiscussionClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    deleteDiscussionClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
-            HttpResponseMessage responseDeleteDiscussion = await deleteDiscussionClient.DeleteAsync(Constant.BASEURL+Constant.DELETEDISCUSSION + discussionId);
-            string responseStringDeleteDiscussion = await responseDeleteDiscussion.Content.ReadAsStringAsync();
-            return Convert.ToInt32(responseStringDeleteDiscussion);
+                    HttpResponseMessage responseDeleteDiscussion = await deleteDiscussionClient.DeleteAsync(Constant.BASEURL + Constant.DELETEDISCUSSION + discussionId);
+                    string responseStringDeleteDiscussion = await responseDeleteDiscussion.Content.ReadAsStringAsync();
+                    return Convert.ToInt32(responseStringDeleteDiscussion);
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -300,16 +310,27 @@ namespace Usebackpack.Service_Layer
         /// <returns></returns>
         public async Task<int> DeleteResources(string cookie, int resourceId)
         {
-            HttpClient deleteResourceClient = new HttpClient();
 
-            deleteResourceClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
-            deleteResourceClient.DefaultRequestHeaders.Add("Cookie", cookie);
+            try
+            {
+                using (HttpClient deleteResourceClient = new HttpClient())
+                {
 
-            HttpResponseMessage responseMessageDeleteResource = await deleteResourceClient.DeleteAsync(Constant.BASEURL+Constant.DELETERESOURCES+resourceId);
+                    deleteResourceClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    deleteResourceClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
-            string responseDeleteResource = await responseMessageDeleteResource.Content.ReadAsStringAsync();
+                    HttpResponseMessage responseMessageDeleteResource = await deleteResourceClient.DeleteAsync(Constant.BASEURL + Constant.DELETERESOURCES + resourceId);
 
-            return Convert.ToInt32(responseDeleteResource);
+                    string responseDeleteResource = await responseMessageDeleteResource.Content.ReadAsStringAsync();
+
+                    return Convert.ToInt32(responseDeleteResource);
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
            
         }
 
@@ -321,15 +342,25 @@ namespace Usebackpack.Service_Layer
         /// <returns></returns>
         public async Task<int> DeleteDeadlines(string cookie, int deadlineId)
         {
-            HttpClient deleteDeadlinesClient = new HttpClient();
+            try
+            {
+                using (HttpClient deleteDeadlinesClient = new HttpClient())
+                {
 
-            deleteDeadlinesClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
-            deleteDeadlinesClient.DefaultRequestHeaders.Add("Cookie", cookie);
+                    deleteDeadlinesClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    deleteDeadlinesClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
-            HttpResponseMessage responseMessageDeleteDeadlines = await deleteDeadlinesClient.DeleteAsync(Constant.BASEURL+Constant.DELETEDEADLINES+deadlineId);
+                    HttpResponseMessage responseMessageDeleteDeadlines = await deleteDeadlinesClient.DeleteAsync(Constant.BASEURL + Constant.DELETEDEADLINES + deadlineId);
 
-            string responseDeleteDeadlines = await responseMessageDeleteDeadlines.Content.ReadAsStringAsync();
-            return Convert.ToInt32(responseDeleteDeadlines);
+                    string responseDeleteDeadlines = await responseMessageDeleteDeadlines.Content.ReadAsStringAsync();
+                    return Convert.ToInt32(responseDeleteDeadlines);
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -341,16 +372,26 @@ namespace Usebackpack.Service_Layer
         public async Task<int> DeleteReply(string cookie,int replyId)
         {
 
-            HttpClient deleteReplyClient = new HttpClient();
+            try
+            {
+                using (HttpClient deleteReplyClient = new HttpClient())
+                {
 
-            deleteReplyClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
-            deleteReplyClient.DefaultRequestHeaders.Add("Cookie", cookie);
+                    deleteReplyClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    deleteReplyClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
-            HttpResponseMessage responseMessageDeleteReply = await deleteReplyClient.DeleteAsync(Constant.BASEURL+Constant.DELETEREPLY+replyId);
+                    HttpResponseMessage responseMessageDeleteReply = await deleteReplyClient.DeleteAsync(Constant.BASEURL + Constant.DELETEREPLY + replyId);
 
-            string responseDeleteReply = await responseMessageDeleteReply.Content.ReadAsStringAsync();
+                    string responseDeleteReply = await responseMessageDeleteReply.Content.ReadAsStringAsync();
 
-            return Convert.ToInt32(responseDeleteReply);
+                    return Convert.ToInt32(responseDeleteReply);
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
 
         }
 
@@ -362,17 +403,27 @@ namespace Usebackpack.Service_Layer
         /// <returns></returns>
         public async Task<int> DeleteComment(string cookie, int commentId)
         {
-            HttpClient deleteCommentClient = new HttpClient();
+            try
+            {
+                using (HttpClient deleteCommentClient = new HttpClient())
+                {
 
-            deleteCommentClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
-            deleteCommentClient.DefaultRequestHeaders.Add("Cookie", cookie);
+                    deleteCommentClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    deleteCommentClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
 
-            HttpResponseMessage responseMessageDeleteComment = await deleteCommentClient.DeleteAsync(Constant.BASEURL+Constant.DELETECOMMENT+commentId);
+                    HttpResponseMessage responseMessageDeleteComment = await deleteCommentClient.DeleteAsync(Constant.BASEURL + Constant.DELETECOMMENT + commentId);
 
-            string responseDeleteComment = await responseMessageDeleteComment.Content.ReadAsStringAsync();
+                    string responseDeleteComment = await responseMessageDeleteComment.Content.ReadAsStringAsync();
 
-            return Convert.ToInt32(responseDeleteComment);
+                    return Convert.ToInt32(responseDeleteComment);
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -387,26 +438,37 @@ namespace Usebackpack.Service_Layer
         /// <returns></returns>
         public async Task<int> PostDeadline(string title, string courseId, string userId, string datePart, string timePart, string cookie)
         {
-            HttpClient postDeadlineClient = new HttpClient();
 
-            postDeadlineClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
-            postDeadlineClient.DefaultRequestHeaders.Add("Cookie", cookie);
+            try
+            {
+                using (HttpClient postDeadlineClient = new HttpClient())
+                {
 
-            Dictionary<string, string> dictPostDeadlines = new Dictionary<string, string>();
+                    postDeadlineClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    postDeadlineClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
-            dictPostDeadlines.Add("title", title);
-            dictPostDeadlines.Add("course_Id", courseId);
-            dictPostDeadlines.Add("user_Id", userId);
-            dictPostDeadlines.Add("date_part", datePart);
-            dictPostDeadlines.Add("time_part", timePart);
+                    Dictionary<string, string> dictPostDeadlines = new Dictionary<string, string>();
 
-            HttpContent postDeadlineContent = new FormUrlEncodedContent(dictPostDeadlines);
+                    dictPostDeadlines.Add("title", title);
+                    dictPostDeadlines.Add("course_Id", courseId);
+                    dictPostDeadlines.Add("user_Id", userId);
+                    dictPostDeadlines.Add("date_part", datePart);
+                    dictPostDeadlines.Add("time_part", timePart);
 
-            HttpResponseMessage responseMessagePostDeadlines = await postDeadlineClient.PostAsync(Constant.BASEURL+Constant.POSTDEADLINES, postDeadlineContent);
+                    HttpContent postDeadlineContent = new FormUrlEncodedContent(dictPostDeadlines);
 
-            string responsePostDeadlines = await responseMessagePostDeadlines.Content.ReadAsStringAsync();
+                    HttpResponseMessage responseMessagePostDeadlines = await postDeadlineClient.PostAsync(Constant.BASEURL + Constant.POSTDEADLINES, postDeadlineContent);
 
-            return Convert.ToInt32(responsePostDeadlines);
+                    string responsePostDeadlines = await responseMessagePostDeadlines.Content.ReadAsStringAsync();
+
+                    return Convert.ToInt32(responsePostDeadlines);
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -420,23 +482,33 @@ namespace Usebackpack.Service_Layer
         /// <returns></returns>
         public async Task<int> PostDiscussion(string courseId,string userId,string body,string subject,string cookie)
         {
-            HttpClient postDiscussionClient = new HttpClient();
+            try
+            {
+                using (HttpClient postDiscussionClient = new HttpClient())
+                {
 
-            postDiscussionClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
-            postDiscussionClient.DefaultRequestHeaders.Add("Cookie", cookie);
+                    postDiscussionClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    postDiscussionClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
-            Dictionary<string, string> dicPostDiscussion = new Dictionary<string, string>();
-            dicPostDiscussion.Add("course_Id", courseId);
-            dicPostDiscussion.Add("user_Id", userId);
-            dicPostDiscussion.Add("body", body);
-            dicPostDiscussion.Add("subject", subject);
-            HttpContent postDiscussionContent = new FormUrlEncodedContent(dicPostDiscussion);
+                    Dictionary<string, string> dicPostDiscussion = new Dictionary<string, string>();
+                    dicPostDiscussion.Add("course_Id", courseId);
+                    dicPostDiscussion.Add("user_Id", userId);
+                    dicPostDiscussion.Add("body", body);
+                    dicPostDiscussion.Add("subject", subject);
+                    HttpContent postDiscussionContent = new FormUrlEncodedContent(dicPostDiscussion);
 
-            HttpResponseMessage responseMessagePostDiscussion = await postDiscussionClient.PostAsync(Constant.BASEURL+Constant.POSTDISCUSSION, postDiscussionContent);
+                    HttpResponseMessage responseMessagePostDiscussion = await postDiscussionClient.PostAsync(Constant.BASEURL + Constant.POSTDISCUSSION, postDiscussionContent);
 
-            string responsePostDiscussion = await responseMessagePostDiscussion.Content.ReadAsStringAsync();
+                    string responsePostDiscussion = await responseMessagePostDiscussion.Content.ReadAsStringAsync();
 
-            return Convert.ToInt32(responsePostDiscussion);
+                    return Convert.ToInt32(responsePostDiscussion);
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
     }    

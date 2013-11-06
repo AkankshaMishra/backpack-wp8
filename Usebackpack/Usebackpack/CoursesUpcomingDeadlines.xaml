@@ -6,7 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -48,14 +48,16 @@
                 <Grid x:Name="UpcomingDeadlines">
                     <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstUpcomingDeadlines">
                         <phone:LongListSelector.ItemTemplate>
-                            <DataTemplate>
+                           <DataTemplate>
                                 <StackPanel Margin="0,10,0,0">
                                     <TextBlock x:Name="tbCourseName" Text="{Binding CourseName}" Style="{StaticResource PhoneTextLargeStyle}"/>
                                     <TextBlock x:Name="tbDeadlineName" Text="{Binding DeadlineName}" Style="{StaticResource PhoneTextLargeStyle}"/>
                                     <TextBlock x:Name="tbDeadlineTime" Text="{Binding DeadLineTime}" Style="{StaticResource PhoneTextLargeStyle}"/>
                                 </StackPanel>
                             </DataTemplate>
+                   
                         </phone:LongListSelector.ItemTemplate>
+           
                     </phone:LongListSelector>
                     <TextBlock x:Name="tbNoDeadlines" Visibility="Collapsed" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
                 </Grid>
