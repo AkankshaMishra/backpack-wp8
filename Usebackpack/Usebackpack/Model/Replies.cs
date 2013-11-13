@@ -11,7 +11,10 @@ namespace Usebackpack.Model
     public class Replies
     {
         [DataMember(Name="user")]
-        public int UserID { get; set; }
+        public int UserId { get; set; }
+
+        [DataMember(Name="username")]
+        public string UserName { get; set; }
         
         [DataMember(Name="body")]
         public string Body { get; set; }
@@ -31,5 +34,8 @@ namespace Usebackpack.Model
         public int AttachmentFileSize { get; set; }
 
         public DateTime AttachmentUpdatedOn{ get; set; }
+
+        [DataMember(Name="comments")]
+        public List<Replies> Comments { get; set; }
     }
 }

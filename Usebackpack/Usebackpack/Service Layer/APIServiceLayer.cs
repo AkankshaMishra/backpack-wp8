@@ -22,6 +22,8 @@ namespace Usebackpack.Service_Layer
     /// </summary>
     public class APIServiceLayer:IAPIServiceLayer
     {
+        HTMLParser objParser = new HTMLParser();
+
         /// <summary>
         /// Method to return the instance of APIService Layer
         /// </summary>
@@ -168,7 +170,7 @@ namespace Usebackpack.Service_Layer
         /// </summary>
         /// <param name="cookie"></param>
         /// <param name="discussionId"></param>
-        public async Task<Discussions> RetrieveDiscussionsByDiscussionId(string cookie,int discussionId)
+        public async Task<List<Discussions>> RetrieveDiscussionsByDiscussionId(string cookie,int discussionId)
         {
             try
             {
@@ -180,7 +182,7 @@ namespace Usebackpack.Service_Layer
 
                     string responseDiscussion = await retrieveDiscussionClient.GetStringAsync(new Uri(Constant.BASEURL + Constant.RETRIEVEDISCUSSIONS + discussionId, UriKind.Absolute));
 
-                    Discussions userDetails = JsonConvert.DeserializeObject<Discussions>(responseDiscussion);
+                    List<Discussions> userDetails = JsonConvert.DeserializeObject<List<Discussions>>(responseDiscussion);
                     return userDetails;
                 }
             }
@@ -238,6 +240,12 @@ namespace Usebackpack.Service_Layer
                     string responseDeadlines = await retrieveDeadlinesClient.GetStringAsync(new Uri(Constant.BASEURL + Constant.RETRIEVEDEADLINES + deadlineId, UriKind.Absolute));
 
                     List<Deadlines> deadlineDetails = JsonConvert.DeserializeObject<List<Deadlines>>(responseDeadlines);
+                    for(int i=0;i<deadlineDetails.Count;i++)
+                    {
+                        string htmlDeadlineBody = WebUtility.HtmlDecode(deadlineDetails[i].Body);
+                        string parsedBody = objParser.ParseHTMLContent(htmlDeadlineBody);
+                        deadlineDetails[i].ParsedBody = parsedBody;
+                    }
                     return deadlineDetails;
                 }
             }
@@ -265,6 +273,12 @@ namespace Usebackpack.Service_Layer
 
                     string responseResources = await retrieveResourceClient.GetStringAsync(new Uri(Constant.BASEURL + Constant.RETRIEVERESOURCES + courseId, UriKind.Absolute));
                     List<Usebackpack.Model.Resources> lstResources = JsonConvert.DeserializeObject<List<Usebackpack.Model.Resources>>(responseResources);
+                    for (int i = 0; i < lstResources.Count; i++)
+                    {
+                        string htmlResourceBody = WebUtility.HtmlDecode(lstResources[i].HTMLBody);
+                        string parsedBody = objParser.ParseHTMLContent(htmlResourceBody);
+                        lstResources[i].Body = parsedBody;
+                    }
                     return lstResources;
                 }
             }

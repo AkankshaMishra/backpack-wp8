@@ -21,6 +21,8 @@ namespace Usebackpack
 
         public int CourseCount { get; set; }
 
+        public string GoogleToken { get; set; }
+
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.

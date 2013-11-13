@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Usebackpack.Common;
 
 namespace Usebackpack.Model
 {
@@ -27,10 +28,10 @@ namespace Usebackpack.Model
         [DataMember(Name="description")]
         public string Description { get; set; }
 
-       [DataMember(Name="prerequisties")]
+        [DataMember(Name="prerequisties")]
         public string Prerequisites { get; set; }
 
-        [DataMember(Name="evaluation")]
+        [DataMember(Name = "evaluation")]
         public string Evaluation { get; set; }
         
         [DataMember(Name="officehours")]
@@ -44,6 +45,9 @@ namespace Usebackpack.Model
 
         [DataMember(Name="timings")]
         public string Timings { get; set; }
+
+        [DataMember(Name="discussions")]
+        public List<Discussions> Discussion { get; set; }
 
     }
 }

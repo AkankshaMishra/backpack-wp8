@@ -27,6 +27,8 @@ namespace Usebackpack
         Course objCourse = new Course();
         List<Deadlines> listDeadlines = new List<Deadlines>();
         List<Model.Resources> listResources = new List<Model.Resources>();
+        HTMLParser objParser = new HTMLParser();
+        List<Discussions> lstDiscussion = new List<Discussions>();
         public CourseDetail()
         {
             InitializeComponent();
@@ -57,7 +59,10 @@ namespace Usebackpack
             }
             else
             {
-                txtOverview.Text = objCourse.Overview;
+
+                string htmlOverview = WebUtility.HtmlDecode(objCourse.Overview);
+                string overview = objParser.ParseHTMLContent(htmlOverview);
+                txtOverview.Text = overview;
             }
 
             if (objCourse.TextBooks==null)
@@ -67,7 +72,9 @@ namespace Usebackpack
             }
             else
             {
-                txtTextBooks.Text = objCourse.TextBooks;
+                string htmlTextbook = WebUtility.HtmlDecode(objCourse.TextBooks);
+                string textbooks = objParser.ParseHTMLContent(htmlTextbook);
+                txtTextBooks.Text = textbooks;
             }
 
             if (objCourse.OfficeHours==null)
@@ -77,7 +84,9 @@ namespace Usebackpack
             }
             else
             {
-            txtOfficeHours.Text = objCourse.OfficeHours;
+                string htmlOfficeHours = WebUtility.HtmlDecode(objCourse.OfficeHours);
+                string officeHours = objParser.ParseHTMLContent(htmlOfficeHours);
+                txtOfficeHours.Text = officeHours;
             }
 
             if (objCourse.Evaluation==null)
@@ -87,7 +96,9 @@ namespace Usebackpack
             }
             else
             {
-                txtEvaluation.Text = objCourse.Evaluation;
+                string htmlEvaluation = WebUtility.HtmlDecode(objCourse.Evaluation);
+                string evaluation = objParser.ParseHTMLContent(htmlEvaluation);
+                txtEvaluation.Text = evaluation;
             }
 
             if (objCourse.Timings==null)
@@ -97,7 +108,9 @@ namespace Usebackpack
             }
             else
             {
-                txtClassTiming.Text = objCourse.Timings;
+                string htmlTimings = WebUtility.HtmlDecode(objCourse.Timings);
+                string timings = objParser.ParseHTMLContent(htmlTimings);
+                txtClassTiming.Text = timings;
             }
             
 
@@ -120,19 +133,69 @@ namespace Usebackpack
                 lstDeadlines.Visibility = System.Windows.Visibility.Collapsed;
             }
 
-            //Resources bonding
+            //Fetching all the resources
             listResources = await RetrieveResources();
-            if (listResources.Count != 0)
+
+            //Lecture resource
+            var lectureResources = listResources.Where(s => s.ResourceType == "Lecture").ToList<Usebackpack.Model.Resources>();
+            //tutorial resource
+            var tutorialResources = listResources.Where(s => s.ResourceType == "Tutorial").ToList<Usebackpack.Model.Resources>();
+            //video resource
+            var videoResources = listResources.Where(s => s.ResourceType == "Video").ToList<Usebackpack.Model.Resources>();
+            //research paper resources
+            var researchPaperResources = listResources.Where(s => s.ResourceType == "Research Paper").ToList<Usebackpack.Model.Resources>();
+            //exam resources
+            var examResources = listResources.Where(s => s.ResourceType == "Exam").ToList<Usebackpack.Model.Resources>();
+            //project resources
+            var projectResources = listResources.Where(s => s.ResourceType == "Project").ToList<Usebackpack.Model.Resources>();
+
+
+            if (lectureResources.Count != 0)
             {
-                //List<Model.Resources> sortedResources = new List<Model.Resources>();
-                var sortedResources = listResources.GroupBy(s => s.ResourceType).ToList();
-                lstResource.ItemsSource = listResources;
+                txtLectureRType.Visibility = System.Windows.Visibility.Visible;
+                lstLectureResource.Visibility = System.Windows.Visibility.Visible;
+                lstLectureResource.ItemsSource = lectureResources;
             }
-            else
+
+            if (tutorialResources.Count != 0)
+            {
+                txtTutorialRType.Visibility = System.Windows.Visibility.Visible;
+                lstTutorialsResource.Visibility = System.Windows.Visibility.Visible;
+                lstTutorialsResource.ItemsSource = tutorialResources;
+            }
+
+            if (videoResources.Count != 0)
+            {
+                txtVideoRType.Visibility = System.Windows.Visibility.Visible;
+                lstVideosResource.Visibility = System.Windows.Visibility.Visible;
+                lstVideosResource.ItemsSource = videoResources;
+            }
+
+            if (researchPaperResources.Count != 0)
+            {
+                txtReserachPaperRType.Visibility = System.Windows.Visibility.Visible;
+                lstResearchPaperResource.Visibility = System.Windows.Visibility.Visible;
+                lstResearchPaperResource.ItemsSource = researchPaperResources;
+            }
+
+            if (examResources.Count != 0)
+            {
+                txtExamRType.Visibility = System.Windows.Visibility.Visible;
+                lstExamsResource.Visibility = System.Windows.Visibility.Visible;
+                lstExamsResource.ItemsSource = examResources;
+            }
+
+            if (examResources.Count == 0 || researchPaperResources.Count == 0 || videoResources.Count == 0||lectureResources.Count==0||tutorialResources.Count==0)
             {
                 tbNoResources.Visibility = System.Windows.Visibility.Visible;
                 tbNoResources.Text = Constant.NORESOURCES;
-                lstResource.Visibility = System.Windows.Visibility.Collapsed;
+            }
+
+            //Code to bind discussions
+            lstDiscussion = objCourse.Discussion;
+            if (lstDiscussion.Count != 0)
+            {
+                listDiscussion.ItemsSource = lstDiscussion;
             }
         }
 
@@ -168,6 +231,20 @@ namespace Usebackpack
         {
             NavigationService.Navigate(new Uri(Constant.DEADLINEDETAILS, UriKind.Relative));
         }
+
+        private async void hlDiscussionSubject_Click(object sender, RoutedEventArgs e)
+        {
+            HyperlinkButton hlSubject = sender as HyperlinkButton;
+            string content = hlSubject.Content.ToString();
+            string disId = hlSubject.Tag.ToString();
+
+            int discussionId = Convert.ToInt32(disId);
+            await objAPIBusinessLayer.RetrieveDiscussionsByDiscussionId(cookie, discussionId);
+
+            var app = App.Current as App;
+        }
+
+
     }
 
     //Delete this if its nt wrking

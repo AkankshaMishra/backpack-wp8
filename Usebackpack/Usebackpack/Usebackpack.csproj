@@ -96,10 +96,14 @@
     <Compile Include="BackpackLogin.xaml.cs">
       <DependentUpon>BackpackLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BackpackSignin.xaml.cs">
+      <DependentUpon>BackpackSignin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Business Layer\APIBusinessLayer.cs" />
     <Compile Include="Business Layer\IAPIBusinessLayer.cs" />
     <Compile Include="Common\Constant.cs" />
     <Compile Include="Common\Exceptions.cs" />
+    <Compile Include="Common\HTMLParser.cs" />
     <Compile Include="Common\HttpExtensions.cs" />
     <Compile Include="CourseDetail.xaml.cs">
       <DependentUpon>CourseDetail.xaml</DependentUpon>
@@ -165,6 +169,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="BackpackLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BackpackSignin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,6 +269,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
       <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>

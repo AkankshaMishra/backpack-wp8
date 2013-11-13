@@ -44,23 +44,23 @@
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Class Timings" x:Name="tbClassTimings"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtClassTiming"></TextBlock>
                         </StackPanel>
-                        <StackPanel Grid.Row="2" Margin="0,10,0,0">
+                        <!--<StackPanel Grid.Row="2" Margin="0,10,0,0">
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Course Credits" x:Name="tbCourseCredits"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtCourseCredits"></TextBlock>
                         </StackPanel>
                         <StackPanel Grid.Row="3" Margin="0,10,0,0">
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Instructor" x:Name="tbInstructor"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtInstructor"></TextBlock>
-                        </StackPanel>
+                        </StackPanel>-->
 
                         <StackPanel Grid.Row="4" Margin="0,10,0,0">
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Instructor Office Hours" x:Name="tbOfficeHours"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtOfficeHours"></TextBlock>
                         </StackPanel>
-                        <StackPanel Grid.Row="5" Margin="0,10,0,0">
+                        <!--<StackPanel Grid.Row="5" Margin="0,10,0,0">
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Teaching Assisstants" x:Name="tbTA"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtTA"></TextBlock>
-                        </StackPanel>
+                        </StackPanel>-->
                         <StackPanel Grid.Row="6" Margin="0,10,0,0">
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Evaluation" x:Name="tbEvaluation"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtEvaluation">
@@ -88,7 +88,7 @@
                                         <!--<HyperlinkButton Content="{Binding Title}" HorizontalAlignment="Left" x:Name="hlDeadlineTitle" Click="hlDeadlineTitle_Click">
                                     </HyperlinkButton>-->
                                         <TextBlock Text="{Binding DueOn}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                                        <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        <TextBlock Text="{Binding ParsedBody}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </phone:LongListSelector.ItemTemplate>
@@ -101,22 +101,265 @@
             <!--Pivot item three-->
             <phone:PivotItem Header="Resources">
                 <ScrollViewer>
-                    <Grid>
-                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstResource" Margin="0,-9,0,9">
-                            <phone:LongListSelector.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Margin="0,10,0,0">
-                                        <TextBlock Text="{Binding ResourceType}" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap"></TextBlock>
-                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                                        <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                                        <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                                        <Button x:Name="btnResourceDownload" Content="Download" Width="200" HorizontalAlignment="Left" Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}"></Button>
-                                        <!--<Button x:Name="btnResourceDownload" Content="Download" Width="200" HorizontalAlignment="Left" Tag="{Binding AttachementFileName}"></Button>-->
-                                    </StackPanel>
-                                </DataTemplate>
-                            </phone:LongListSelector.ItemTemplate>
-                        </phone:LongListSelector>
-                        <TextBlock x:Name="tbNoResources" Visibility="Collapsed"></TextBlock>
+                    <Grid x:Name="gResources">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <!--Extra code to check the resources,delete it if not working-->
+                        <Grid Grid.Row="0" x:Name="gVideos">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Videos" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" x:Name="txtVideoRType" Visibility="Collapsed" Grid.Row="0"></TextBlock>
+                            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstVideosResource" Margin="0,-9,0,9" Visibility="Collapsed" Grid.Row="1">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <!--<StackPanel Margin="0,10,0,0">
+                                            <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                            <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                            <Button x:Name="btnResourceDownload" Content="Download" Width="200" HorizontalAlignment="Left" Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}"></Button>
+                                        </StackPanel>-->
+                                        <StackPanel Margin="0,30,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="0"></TextBlock>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="1"></TextBlock>
+                                                <Button x:Name="btnResourceDownload" Content="Download" Width="200"  Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,-10,0" Background="#3498DB"></Button>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </Grid>
+
+                        <Grid x:Name="gLecture" Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Lecture" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" Grid.Row="0" x:Name="txtLectureRType" Visibility="Collapsed"></TextBlock>
+                            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstLectureResource" Margin="0,-9,0,9" Visibility="Collapsed" Grid.Row="1">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,30,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="0"></TextBlock>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="1"></TextBlock>
+                                                <Button x:Name="btnResourceDownload" Content="Download" Width="200"  Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right"></Button>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </Grid>
+
+                        <Grid x:Name="gTutorial" Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Tutorials" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" Grid.Row="0" x:Name="txtTutorialRType" Visibility="Collapsed"></TextBlock>
+                            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstTutorialsResource" Margin="0,-9,0,9" Visibility="Collapsed" Grid.Row="1">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,30,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="0"></TextBlock>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="1"></TextBlock>
+                                                <Button x:Name="btnResourceDownload" Content="Download" Width="200"  Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right"></Button>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </Grid>
+
+                        <Grid x:Name="gProject" Grid.Row="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Project" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" Grid.Row="0" x:Name="txtProjectRType" Visibility="Collapsed"></TextBlock>
+                            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstProjectResource" Margin="0,-9,0,9" Visibility="Collapsed" Grid.Row="1">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,30,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="0"></TextBlock>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="1"></TextBlock>
+                                                <Button x:Name="btnResourceDownload" Content="Download" Width="200"  Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right"></Button>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </Grid>
+
+                        <Grid x:Name="gExams" Grid.Row="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Exams" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" Grid.Row="0" x:Name="txtExamRType" Visibility="Collapsed"></TextBlock>
+                            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstExamsResource" Margin="0,-9,0,9" Visibility="Collapsed" Grid.Row="1">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,30,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="0"></TextBlock>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="1"></TextBlock>
+                                                <Button x:Name="btnResourceDownload" Content="Download" Width="200"  Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right"></Button>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </Grid>
+
+                        <Grid x:Name="gSolution" Grid.Row="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Solution" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" Grid.Row="0" x:Name="txtSolutionRType" Visibility="Collapsed"></TextBlock>
+                            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstSolutionResource" Margin="0,-9,0,9" Visibility="Collapsed" Grid.Row="1">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,30,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="0"></TextBlock>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="1"></TextBlock>
+                                                <Button x:Name="btnResourceDownload" Content="Download" Width="200"  Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right"></Button>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </Grid>
+
+                        <Grid x:Name="gResearchPaper" Grid.Row="6">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Research Paper" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" Grid.Row="0" x:Name="txtReserachPaperRType" Visibility="Collapsed"></TextBlock>
+                            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstResearchPaperResource" Margin="0,-9,0,9" Visibility="Collapsed" Grid.Row="1">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,30,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="0"></TextBlock>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="1"></TextBlock>
+                                                <Button x:Name="btnResourceDownload" Content="Download" Width="200"  Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right"></Button>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </Grid>
+
+                        <Grid x:Name="gBooks" Grid.Row="7">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Books" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" Grid.Row="7" x:Name="txtBooksRType" Visibility="Collapsed"></TextBlock>
+                            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstBooksResource" Margin="0,-9,0,9" Visibility="Collapsed" Grid.Row="7">
+                                <phone:LongListSelector.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,30,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="0"></TextBlock>
+                                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Margin="10,0,0,0" Grid.Row="1"></TextBlock>
+                                                <Button x:Name="btnResourceDownload" Content="Download" Width="200"  Tag="{Binding AttachementFileName}" Visibility="{Binding AttachementFileName, Converter={StaticResource converter}}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right"></Button>
+                                            </Grid>
+                                            <TextBlock Text="{Binding Body}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </phone:LongListSelector.ItemTemplate>
+                            </phone:LongListSelector>
+                        </Grid>
+                        <TextBlock x:Name="tbNoResources" Visibility="Collapsed" Grid.Row="8"></TextBlock>
                     </Grid>
                 </ScrollViewer>
             </phone:PivotItem>
@@ -125,21 +368,24 @@
             <phone:PivotItem Header="Discussions">
                 <ScrollViewer>
                     <Grid>
-                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstDiscussion">
+                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="listDiscussion">
                             <phone:LongListSelector.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Margin="0,10,0,0" Orientation="Vertical">
-                                        <Grid>
+                                    <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                                        <Grid Grid.Row="0">
                                             <Grid.RowDefinitions>
-                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
+                                            <HyperlinkButton x:Name="hlDiscussionSubject" FontSize="30" Style="{Binding PhoneTextLargeStyle}" Grid.Row="0" Grid.Column="1" Content="{Binding Subject}" Click="hlDiscussionSubject_Click" Tag="{Binding DiscussionId}">
+                                            </HyperlinkButton>
+                                            <TextBlock x:Name="tbResponse" Text="{Binding UserName}" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Margin="10,0,0,0"/>
+                                            <Image Source="http://www.usebackpack.com/photos/39/M.JPG?1375771542" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Width="70" Height="70"></Image>
                                         </Grid>
-                                        <HyperlinkButton Content="{Binding Subject}" FontSize="30"/>
-                                        <TextBlock x:Name="tbResponse" Text="{Binding Response}" Grid.Column="1"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </phone:LongListSelector.ItemTemplate>

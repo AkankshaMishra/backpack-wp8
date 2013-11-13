@@ -17,7 +17,9 @@ namespace Usebackpack.Model
         public string Title { get; set; }
 
          [DataMember(Name="body")]
-        public string Body { get; set; }
+        public string HTMLBody { get; set; }
+
+         public string Body { get; set; }
 
         [DataMember(Name = "user_id")]
         public int APIUser { get; set; }

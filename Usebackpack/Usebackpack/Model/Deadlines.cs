@@ -19,6 +19,7 @@ namespace Usebackpack.Model
         [DataMember(Name="body")]
         public string Body { get; set; }
 
+        public string ParsedBody { get; set; }
        
         public Course Course { get; set; }
        

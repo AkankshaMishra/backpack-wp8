@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Tasks;
 using Usebackpack.Business_Layer;
 using Usebackpack.Common;
 using Usebackpack.Model;
@@ -59,23 +60,14 @@ namespace Usebackpack
                 var token=await objAPIBusinessLayer.GoogleAuthentication(code.Value);
                 googleToken = token.AccessToken;
 
+                var app = App.Current as App;
+                app.GoogleToken = googleToken;
+
                 if (googleToken != null)
                 {
-                    cookie = await objAPIBusinessLayer.BackpackSignIn(googleToken);
-                    objUser.UserId = Convert.ToInt32(await objAPIBusinessLayer.RetrieveUserId(cookie));
-
-                    objUser=await objAPIBusinessLayer.RetrieveUserDetailsByUserId(objUser.UserId, cookie);
-
-                    //Setting the application level variable--Cookie
-                    var cookieApp = App.Current as App;
-                    cookieApp.Cookie = cookie;
-
-                    //Setting the application level variable--User object
-                    var userApp = App.Current as App;
-                    userApp.User = objUser;
-
                     //Navigate to Home page
-                    NavigationService.Navigate(new Uri(Constant.MYHOME, UriKind.Relative));
+                    NavigationService.Navigate(new Uri(Constant.SIGNIN, UriKind.Relative));
+
                 }
             }
         }

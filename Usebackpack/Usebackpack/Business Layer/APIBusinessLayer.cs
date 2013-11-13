@@ -109,7 +109,7 @@ namespace Usebackpack.Business_Layer
         /// <param name="cookie"></param>
         /// <param name="discussionId"></param>
         /// <returns></returns>
-        public async Task<Discussions> RetrieveDiscussionsByDiscussionId(string cookie,int discussionId)
+        public async Task<List<Discussions>> RetrieveDiscussionsByDiscussionId(string cookie, int discussionId)
         {
             return await objAPIServiceLayer.RetrieveDiscussionsByDiscussionId(cookie, discussionId);
         }

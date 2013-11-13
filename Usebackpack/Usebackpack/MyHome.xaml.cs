@@ -11,6 +11,7 @@ using Usebackpack.Business_Layer;
 using Usebackpack.Resources;
 using Usebackpack.Model;
 using Usebackpack.Common;
+using Microsoft.Phone.Tasks;
 
 namespace Usebackpack
 {
@@ -23,6 +24,7 @@ namespace Usebackpack
         public MainPage()
         {
             InitializeComponent();
+          
             Loaded += MainPage_Loaded;
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
