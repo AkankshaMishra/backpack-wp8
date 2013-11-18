@@ -23,7 +23,7 @@ namespace Usebackpack.Service_Layer
 
         Task<Users> RetrieveUserDetailsByUserId(int userId,string cookie);
 
-        Task<List<Discussions>> RetrieveDiscussionsByDiscussionId(string cookie, int discussionId);
+        Task<Discussions> RetrieveDiscussionsByDiscussionId(string cookie, int discussionId);
 
         Task<Course> RetrieveCoursesByCourseId(string cookie,int courseId);
 

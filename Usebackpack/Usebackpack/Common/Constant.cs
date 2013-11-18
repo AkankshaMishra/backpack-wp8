@@ -46,6 +46,8 @@ namespace Usebackpack.Common
         public const string DELETECOMMENT = "/api/comment/";
         public const string POSTDEADLINES = "/api/deadline";
         public const string POSTDISCUSSION = "/api/discussion";
+        public const string POSTREPLY = "/api/reply";
+        public const string POSTCOMMENT = "/api/comment";
 
         //Messages
         public const string NODEADLINES = "You don't have any deadlines";

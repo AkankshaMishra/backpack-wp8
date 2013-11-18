@@ -170,7 +170,7 @@ namespace Usebackpack.Service_Layer
         /// </summary>
         /// <param name="cookie"></param>
         /// <param name="discussionId"></param>
-        public async Task<List<Discussions>> RetrieveDiscussionsByDiscussionId(string cookie,int discussionId)
+        public async Task<Discussions> RetrieveDiscussionsByDiscussionId(string cookie,int discussionId)
         {
             try
             {
@@ -181,8 +181,7 @@ namespace Usebackpack.Service_Layer
                     retrieveDiscussionClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
                     string responseDiscussion = await retrieveDiscussionClient.GetStringAsync(new Uri(Constant.BASEURL + Constant.RETRIEVEDISCUSSIONS + discussionId, UriKind.Absolute));
-
-                    List<Discussions> userDetails = JsonConvert.DeserializeObject<List<Discussions>>(responseDiscussion);
+                    Discussions userDetails= JsonConvert.DeserializeObject<Discussions>(responseDiscussion);
                     return userDetails;
                 }
             }
@@ -521,6 +520,92 @@ namespace Usebackpack.Service_Layer
             catch (Exception)
             {
                 
+                throw;
+            }
+        }
+
+
+        /// <summary>
+        /// Method to post a deadline
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="courseId"></param>
+        /// <param name="userId"></param>
+        /// <param name="datePart"></param>
+        /// <param name="timePart"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<int> PostReply(string discussionId,string userId,string body,string cookie)
+        {
+            try
+            {
+                using (HttpClient postReplyClient = new HttpClient())
+                {
+
+                    postReplyClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    postReplyClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+                    Dictionary<string, string> dictPostReply = new Dictionary<string, string>();
+
+                    dictPostReply.Add("discussion_id", discussionId);
+                    dictPostReply.Add("user_id", userId);
+                    dictPostReply.Add("body", body);
+
+                    HttpContent postReplyContent = new FormUrlEncodedContent(dictPostReply);
+
+                    HttpResponseMessage responseMessagePostDeadlines = await postReplyClient.PostAsync(Constant.BASEURL + Constant.POSTREPLY, postReplyContent);
+
+                    string responsePostDeadlines = await responseMessagePostDeadlines.Content.ReadAsStringAsync();
+
+                    return Convert.ToInt32(responsePostDeadlines);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        /// <summary>
+        /// Method to post a deadline
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="courseId"></param>
+        /// <param name="userId"></param>
+        /// <param name="datePart"></param>
+        /// <param name="timePart"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<int> PostComments(string id,string comment,string cookie)
+        {
+
+            try
+            {
+                using (HttpClient postCommentClient = new HttpClient())
+                {
+
+                    postCommentClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    postCommentClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+                    Dictionary<string, string> dictPostComments = new Dictionary<string, string>();
+
+                    dictPostComments.Add("id", id);
+                    dictPostComments.Add("comment", comment);
+
+                    HttpContent postDeadlineContent = new FormUrlEncodedContent(dictPostComments);
+
+                    HttpResponseMessage responseMessagePostDeadlines = await postCommentClient.PostAsync(Constant.BASEURL + Constant.POSTCOMMENT, postDeadlineContent);
+
+                    string responsePostDeadlines = await responseMessagePostDeadlines.Content.ReadAsStringAsync();
+
+                    return Convert.ToInt32(responsePostDeadlines);
+                }
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

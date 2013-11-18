@@ -23,6 +23,8 @@ namespace Usebackpack
 
         public string GoogleToken { get; set; }
 
+        public Discussions Discussion { get; set; }
+
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.

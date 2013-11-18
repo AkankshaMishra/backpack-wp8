@@ -121,6 +121,8 @@
       <DependentUpon>ErrorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Model\Comment.cs" />
+    <Compile Include="Model\Reply.cs" />
     <Compile Include="Model\UpcomingDeadlines.cs" />
     <Compile Include="MyHome.xaml.cs">
       <DependentUpon>MyHome.xaml</DependentUpon>
@@ -131,7 +133,6 @@
     <Compile Include="Model\EmailNotification.cs" />
     <Compile Include="Model\GoogleToken.cs" />
     <Compile Include="Model\Notifications.cs" />
-    <Compile Include="Model\Replies.cs" />
     <Compile Include="Model\Resources.cs" />
     <Compile Include="Model\Semester.cs" />
     <Compile Include="Model\User.cs" />

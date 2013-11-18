@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using Usebackpack.Common;
 using System.Windows.Data;
 using System.Globalization;
+using Microsoft.Phone.BackgroundTransfer;
+using System.IO.IsolatedStorage;
 
 
 namespace Usebackpack
@@ -29,6 +31,8 @@ namespace Usebackpack
         List<Model.Resources> listResources = new List<Model.Resources>();
         HTMLParser objParser = new HTMLParser();
         List<Discussions> lstDiscussion = new List<Discussions>();
+        //added for background service
+        private BackgroundTransferRequest backgroundTransferRequest = null;
         public CourseDetail()
         {
             InitializeComponent();
@@ -232,22 +236,139 @@ namespace Usebackpack
             NavigationService.Navigate(new Uri(Constant.DEADLINEDETAILS, UriKind.Relative));
         }
 
-        private async void hlDiscussionSubject_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// This event will be raised on click of discussion hyperlink
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void hlDiscussionSubject_Click(object sender, RoutedEventArgs e)
         {
             HyperlinkButton hlSubject = sender as HyperlinkButton;
-            string content = hlSubject.Content.ToString();
+            string subject = hlSubject.Content.ToString();
             string disId = hlSubject.Tag.ToString();
 
+            //Retrieve discussionId and subject
             int discussionId = Convert.ToInt32(disId);
-            await objAPIBusinessLayer.RetrieveDiscussionsByDiscussionId(cookie, discussionId);
+            Discussions objDiscussion = new Discussions();
+            objDiscussion.DiscussionId = discussionId;
+            objDiscussion.Subject = subject;
 
-            var app = App.Current as App;
+            var discussion = App.Current as App;
+            discussion.Discussion = objDiscussion;
+
+            NavigationService.Navigate(new Uri("/Discussion.xaml",UriKind.Relative));
+
         }
 
+        private void btnResourceDownload_Click(object sender, RoutedEventArgs e)
+        {
 
+
+
+            if (backgroundTransferRequest != null)
+            {
+                BackgroundTransferService.Remove(backgroundTransferRequest);
+            }
+
+            // backgroundTransferRequest = new BackgroundTransferRequest(videoDownloadUri, saveLocationUri);
+            Button btnDownload = sender as Button;
+            string transferFileName = "http://www.usebackpack.com/resources/547/download?1383196424"; //btnDownload.Tag.ToString();
+            Uri transferUri = new Uri(Uri.EscapeUriString(transferFileName), UriKind.RelativeOrAbsolute);
+            // backgroundTransferRequest.TransferPreferences = TransferPreferences.AllowCellularAndBattery;
+
+            BackgroundTransferRequest transferRequest = new BackgroundTransferRequest(transferUri);
+
+            // Set the transfer method. GET and POST are supported.
+            transferRequest.Method = "GET";
+
+
+            string downloadFile = transferFileName.Substring(transferFileName.LastIndexOf("/") + 1);
+            Uri downloadUri = new Uri("shared/transfers/" + downloadFile, UriKind.RelativeOrAbsolute);
+            transferRequest.DownloadLocation = downloadUri;
+            transferRequest.TransferPreferences = TransferPreferences.AllowCellular;
+            // Pass custom data with the Tag property. In this example, the friendly name
+            // is passed.
+            transferRequest.Tag = downloadFile;
+            try
+            {
+                BackgroundTransferService.Add(transferRequest);
+            }
+            catch (Exception exc)
+            {
+
+
+            }
+
+            ProcessTransfer(transferRequest);
+        }
+
+        private void ProcessTransfer(BackgroundTransferRequest transfer)
+        {
+            switch (transfer.TransferStatus)
+            {
+                case TransferStatus.Completed:
+
+                    // If the status code of a completed transfer is 200 or 206, the
+                    // transfer was successful
+                    if (transfer.StatusCode == 200 || transfer.StatusCode == 206)
+                    {
+                        // Remove the transfer request in order to make room in the 
+                        // queue for more transfers. Transfers are not automatically
+                        // removed by the system.
+                        RemoveTransferRequest(transfer.RequestId);
+                        //downloadFileSize.Text = "Total File Size: " + backgroundTransferRequest.TotalBytesToReceive;
+                        //downloadProgress.Text = "Bytes Received: " + backgroundTransferRequest.BytesReceived;
+
+                        // In this example, the downloaded file is moved into the root
+                        // Isolated Storage directory
+                        using (IsolatedStorageFile isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                        {
+                            string filename = transfer.Tag;
+                            if (isoStore.FileExists(filename))
+                            {
+                                isoStore.DeleteFile(filename);
+                            }
+                            isoStore.MoveFile(transfer.DownloadLocation.OriginalString, filename);
+                        }
+                    }
+                    else
+                    {
+                        // This is where you can handle whatever error is indicated by the
+                        // StatusCode and then remove the transfer from the queue. 
+                        RemoveTransferRequest(transfer.RequestId);
+
+                        if (transfer.TransferError != null)
+                        {
+                            // Handle TransferError if one exists.
+                        }
+                    }
+                    break;
+
+
+            }
+        }
+
+        private void RemoveTransferRequest(string transferID)
+        {
+            // Use Find to retrieve the transfer request with the specified ID.
+            BackgroundTransferRequest transferToRemove = BackgroundTransferService.Find(transferID);
+
+            // Try to remove the transfer from the background transfer service.
+            try
+            {
+                BackgroundTransferService.Remove(transferToRemove);
+            }
+            catch (Exception e)
+            {
+                // Handle the exception.
+            }
+        }
     }
 
     //Delete this if its nt wrking
+    /// <summary>
+    /// This method is used to hide/show the Download resource button
+    /// </summary>
     public class StringLengthVisiblityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

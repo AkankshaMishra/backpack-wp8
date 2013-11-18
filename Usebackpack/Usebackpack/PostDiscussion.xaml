@@ -39,7 +39,7 @@
             <TextBox x:Name="txtSubject" AcceptsReturn="True" Grid.Row="1"/>
             <TextBlock Text="Enter Details" Grid.Row="2" Margin="10,0,0,0"/>
             <TextBox x:Name="txtDetails" AcceptsReturn="True" Grid.Row="3" Height="200"/>
-            <Button x:Name="btnPost" Content="Post Discussion" Width="Auto" Grid.Row="4"/>
+            <Button x:Name="btnPost" Content="Post Discussion" Width="Auto" Grid.Row="4" Click="btnPost_Click" />
         </Grid>
     </Grid>
 

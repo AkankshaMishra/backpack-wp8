@@ -28,8 +28,25 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ScrollViewer>
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Border BorderThickness="2,2,2,2" CornerRadius="5" BorderBrush="White">
+                        <TextBlock x:Name="txtDiscussion" ></TextBlock>
+                    </Border>
+                    <StackPanel x:Name="spReply" Grid.Row="1">
 
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </Grid>
+
 
 </phone:PhoneApplicationPage>

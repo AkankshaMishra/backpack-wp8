@@ -50,6 +50,6 @@ namespace Usebackpack.Model
         public int CourseId { get; set; }
 
         [DataMember(Name="replies")]
-        public List<Replies> Replies { get; set; }
+       public List<Reply> Replies { get; set; }
     }
 }
