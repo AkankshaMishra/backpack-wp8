@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Usebackpack.Business_Layer;
+using Usebackpack.Common;
 using Usebackpack.Model;
 
 namespace Usebackpack
@@ -22,22 +23,28 @@ namespace Usebackpack
         string cookie = null;
         int discussionId = 0;
         string subject = null;
+        int userId = 0;
+        HTMLParser objParser = new HTMLParser();
         public Discussion()
         {
             InitializeComponent();
-            Loaded += Discussion_Loaded;
-            
+            Loaded += Discussion_Loaded;          
         }
 
         public async void Discussion_Loaded(object sender, RoutedEventArgs e)
         {
             var discussion = App.Current as App;
+            userId = discussion.User.UserId;
             cookie = discussion.Cookie;
             discussionId = discussion.Discussion.DiscussionId;
             subject = discussion.Discussion.Subject;
+            txtSubect.Text = objParser.ParseHTMLContent(WebUtility.HtmlDecode(subject));
+            txtSubect.TextWrapping = TextWrapping.Wrap;
             objDiscussion = await RetrieveDiscussions(cookie, discussionId);
             //discussion value
-            txtDiscussion.Text = objDiscussion.Body;
+            string discuss = objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Body));
+            txtDiscussion.Text = discuss;
+            txtDiscussion.TextWrapping = TextWrapping.Wrap;
 
             StackPanel spComments = new StackPanel();
             for (int i = 0; i < objDiscussion.Replies.Count; i++)
@@ -67,13 +74,18 @@ namespace Usebackpack
                 TextBlock tbName = new TextBlock();
 
                 //tbName.Text = "Kumar" + i;
-                tbName.Text = objDiscussion.Replies[i].UserName;
+                string repliesName=objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].UserName));
+                tbName.Text = repliesName;
+                tbName.TextWrapping = TextWrapping.Wrap;
+                speachReply.Children.Add(tbName);
 
                 TextBlock tbRply = new TextBlock();
                 //tbRply.Text = "Reply" + i;
-                tbRply.Text = objDiscussion.Replies[i].Body;
+                string repliesBody = objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].Body));
+                tbRply.Text = repliesBody;
+                tbReply.TextWrapping = TextWrapping.Wrap;
 
-                speachReply.Children.Add(tbName);
+                
                 speachReply.Children.Add(tbRply);
                 //added reply  to spCommentReply stack panel
                 spCommentAndReply.Children.Add(speachReply);
@@ -95,11 +107,15 @@ namespace Usebackpack
                     //Adding textblock for comments
                     TextBlock tbNameComments = new TextBlock();
                     //tbNameComments.Text = "Kumar" + j;
-                    tbNameComments.Text = objDiscussion.Replies[i].Comments[j].UserName;
+                    string commentsName=objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].Comments[j].UserName));
+                    tbNameComments.Text = commentsName;
+                    tbNameComments.TextWrapping = TextWrapping.Wrap;
 
                     TextBlock tbComment = new TextBlock();
                     //tbComment.Text = "Comment" + j;
-                    tbComment.Text = objDiscussion.Replies[i].Comments[j].comment;
+                    string commentBody=objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].Comments[j].comment));
+                    tbComment.Text = commentBody;
+                    tbComment.TextWrapping = TextWrapping.Wrap;
 
                     speachComments.Children.Add(tbNameComments);
                     speachComments.Children.Add(tbComment);
@@ -153,15 +169,23 @@ namespace Usebackpack
         }
 
         //button for sending reply
-        void btnReply_Click(object sender, RoutedEventArgs e)
+        private async void btnReply_Click(object sender, RoutedEventArgs e)
         {
             //discussion id from previous page
             string replyName = tbReply.Text;
+            if (replyName.Equals(""))
+            {
+                MessageBox.Show("Please enter comments");
+            }
+            else
+            {
+                int ret = await objAPIBusinessLayer.PostComments(discussionId.ToString(), userId.ToString(), cookie);
+            }
 
         }
 
         //button for sending comments
-        void btnSend_Click(object sender, RoutedEventArgs e)
+        private async void btnSend_Click(object sender, RoutedEventArgs e)
         {
             Button btnName = sender as Button;
             //get the name of the button clicked
@@ -188,7 +212,7 @@ namespace Usebackpack
                 }
                 else
                 {
-                    
+                    int ret=await objAPIBusinessLayer.PostReply(discussionId.ToString(), userId.ToString(), commentsText, cookie);
                 }
             }
         }

@@ -63,10 +63,9 @@ namespace Usebackpack.Common
             {
                 data = data.Replace("<br>", "\n");
             }
-            if (data.Contains("<div>"))
-            {
-                data = data.Replace("<div>", "\n");
-            }
+
+            data = Regex.Replace(data, @"<div.*>", "\n");
+
             if (data.Contains("</div>"))
             {
                 data = data.Replace("</div>", "\n");
@@ -78,6 +77,10 @@ namespace Usebackpack.Common
             if (data.Contains("</span>"))
             {
                 data = data.Replace("</span>", "");
+            }
+            if(data.Contains("&#39;"))
+            {
+                data = data.Replace("&#39;","'");
             }
             data = Regex.Replace(data, @"<a.*>", "");
             data = Regex.Replace(data, @"<span.*>", " ");

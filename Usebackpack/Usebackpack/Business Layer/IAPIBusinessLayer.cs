@@ -44,5 +44,9 @@ namespace Usebackpack.Business_Layer
         Task<int> PostDeadline(string title, string courseId, string userId, string datePart, string timePart, string cookie);
 
         Task<int> PostDiscussion(string courseId, string userId, string body, string subject, string cookie);
+
+        Task<int> PostReply(string discussionId, string userId, string body, string cookie);
+
+        Task<int> PostComments(string id, string comment, string cookie);
     }
 }

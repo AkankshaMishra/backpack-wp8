@@ -29,6 +29,8 @@ namespace Usebackpack.Common
         public const string COURSESUPCOMINGDEADLINES = "/CoursesUpcomingDeadlines.xaml";
         public const string DEADLINEDETAILS = "/DeadlineDetails.xaml";
         public const string SIGNIN = "/BackpackSignin.xaml";
+        public const string ABOUT = "/About.xaml";
+        public const string FEEDBACK = "/Feedback.xaml";
 
         //API URL   
         public const string BASEURL = "http://www.usebackpack.com";

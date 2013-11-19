@@ -83,6 +83,16 @@ namespace Usebackpack
             NavigationService.Navigate(new Uri(Constant.SETTINGS, UriKind.Relative));
         }
 
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(Constant.ABOUT, UriKind.Relative));
+        }
+
+        private void btnFeedback_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri(Constant.FEEDBACK, UriKind.Relative));
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

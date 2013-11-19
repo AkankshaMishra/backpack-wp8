@@ -230,6 +230,30 @@ namespace Usebackpack.Business_Layer
         {
             return await objAPIServiceLayer.PostDiscussion(courseId, userId, body, subject, cookie);
         }
-        
+
+        /// <summary>
+        /// Method to post reply
+        /// </summary>
+        /// <param name="discussionId"></param>
+        /// <param name="userId"></param>
+        /// <param name="body"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<int> PostReply(string discussionId, string userId, string body, string cookie)
+        {
+            return await objAPIServiceLayer.PostReply(discussionId, userId, body, cookie);
+        }
+
+        /// <summary>
+        /// Method to post comments
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="comment"></param>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<int> PostComments(string id, string comment, string cookie)
+        {
+            return await objAPIServiceLayer.PostComments(id, comment, cookie);
+        }
     }
 }
