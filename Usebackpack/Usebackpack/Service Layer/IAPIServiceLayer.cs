@@ -48,5 +48,9 @@ namespace Usebackpack.Service_Layer
         Task<int> PostReply(string discussionId, string userId, string body, string cookie);
 
         Task<int> PostComments(string id, string comment, string cookie);
+
+        Task<string> PushNotification(string cookie);
+
+        Task<List<Notifications>> RetrieveNotification(string cookie);
     }
 }

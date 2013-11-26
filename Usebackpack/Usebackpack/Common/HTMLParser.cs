@@ -82,6 +82,24 @@ namespace Usebackpack.Common
             {
                 data = data.Replace("&#39;","'");
             }
+
+            if (data.Contains("<b>"))
+            {
+                data = data.Replace("<b>", "");
+            }
+            if (data.Contains("</b>"))
+            {
+                data = data.Replace("</b>", "");
+            }
+            if (data.Contains("<i>"))
+            {
+                data = data.Replace("<i>", "");
+            }
+            if (data.Contains("</i>"))
+            {
+                data = data.Replace("</i>", "");
+            }
+
             data = Regex.Replace(data, @"<a.*>", "");
             data = Regex.Replace(data, @"<span.*>", " ");
             return data;

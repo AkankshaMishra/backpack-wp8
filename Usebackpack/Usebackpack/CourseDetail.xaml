@@ -44,11 +44,11 @@
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Class Timings" x:Name="tbClassTimings"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtClassTiming"></TextBlock>
                         </StackPanel>
-                        <!--<StackPanel Grid.Row="2" Margin="0,10,0,0">
+                        <StackPanel Grid.Row="2" Margin="0,10,0,0">
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Course Credits" x:Name="tbCourseCredits"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtCourseCredits"></TextBlock>
                         </StackPanel>
-                        <StackPanel Grid.Row="3" Margin="0,10,0,0">
+                        <!--<StackPanel Grid.Row="3" Margin="0,10,0,0">
                             <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="Instructor" x:Name="tbInstructor"></TextBlock>
                             <TextBlock Margin="13,10,0,0" TextWrapping="Wrap" x:Name="txtInstructor"></TextBlock>
                         </StackPanel>-->
@@ -368,7 +368,12 @@
             <phone:PivotItem Header="Discussions">
                 <ScrollViewer>
                     <Grid>
-                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="listDiscussion">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="btnPostDiscussion" Grid.Row="0" Content="Post Discussion" Click="btnPostDiscussion_Click"/>
+                        <phone:LongListSelector ItemsSource="{Binding}" x:Name="listDiscussion" Grid.Row="1">
                             <phone:LongListSelector.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="0,20,0,0" Orientation="Vertical">
@@ -395,5 +400,9 @@
             </phone:PivotItem>
         </phone:Pivot>
     </Grid>
-
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="False" IsMenuEnabled="True" x:Name="DiscussionAppBar">
+            <shell:ApplicationBarIconButton x:Name="btnSearch" IconUri="/icons/appbar.add.rest.png" Text="Search" Click="btnSearch_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
 </phone:PhoneApplicationPage>

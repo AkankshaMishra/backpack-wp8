@@ -36,7 +36,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<GoogleToken> GoogleAuthentication(string code)
         {
-            return await objAPIServiceLayer.GoogleAuthentication(code);
+            try
+            {
+                return await objAPIServiceLayer.GoogleAuthentication(code);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -46,7 +54,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<string> BackpackSignIn(string googleOAuthToken)
         {
-            return await objAPIServiceLayer.BackpackSignIn(googleOAuthToken);
+            try
+            {
+                return await objAPIServiceLayer.BackpackSignIn(googleOAuthToken);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -56,7 +72,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<string> RetrieveUserId(string cookie)
         {
-            return await objAPIServiceLayer.RetrieveUserId(cookie);
+            try
+            {
+                return await objAPIServiceLayer.RetrieveUserId(cookie);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -67,40 +91,48 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<Users> RetrieveUserDetailsByUserId(int userId,string cookie)
         {
-            Users userDetails = new Users();
-            userDetails= await objAPIServiceLayer.RetrieveUserDetailsByUserId(userId, cookie);
-            string concatCourseId = userDetails.APICourseId;
-            string concatCourseName=userDetails.APICourseName;
-            int courseIdlength = concatCourseId.Length;
-            int courseNamelength = concatCourseName.Length;
-            string subCourseId = concatCourseId.Substring(1, courseIdlength -2);
-            string subCourseName = concatCourseName.Substring(1, courseNamelength - 2);
-            string[] courseIdArray=new string[30];
-            string[] courseNameArray=new string[30];
-            courseIdArray= subCourseId.Split(',');
-            courseNameArray=subCourseName.Split(',');
-
-            userDetails.UserCourses = new List<Course>();
-            for (int i = 0; i < courseIdArray.Length; i++)
+            try
             {
-                Course objCourses=new Course();
-                objCourses.CourseId=Convert.ToInt32(courseIdArray[i]);
-                objCourses.CourseName = Convert.ToString(courseNameArray[i]);
-                userDetails.UserCourses.Add(objCourses);
+                Users userDetails = new Users();
+                userDetails = await objAPIServiceLayer.RetrieveUserDetailsByUserId(userId, cookie);
+                string concatCourseId = userDetails.APICourseId;
+                string concatCourseName = userDetails.APICourseName;
+                int courseIdlength = concatCourseId.Length;
+                int courseNamelength = concatCourseName.Length;
+                string subCourseId = concatCourseId.Substring(1, courseIdlength - 2);
+                string subCourseName = concatCourseName.Substring(1, courseNamelength - 2);
+                string[] courseIdArray = new string[30];
+                string[] courseNameArray = new string[30];
+                courseIdArray = subCourseId.Split(',');
+                courseNameArray = subCourseName.Split(',');
 
+                userDetails.UserCourses = new List<Course>();
+                for (int i = 0; i < courseIdArray.Length; i++)
+                {
+                    Course objCourses = new Course();
+                    objCourses.CourseId = Convert.ToInt32(courseIdArray[i]);
+                    objCourses.CourseName = Convert.ToString(courseNameArray[i]);
+                    userDetails.UserCourses.Add(objCourses);
+
+                }
+                //counting the no. of courses
+                var courseCountApp = App.Current as App;
+                courseCountApp.CourseCount = courseIdArray.Length;
+
+                //foreach (var item in userDetails.UpcomingDeadlines)
+                for (int i = 0; i < userDetails.UpcomingDeadlines.Count; i++)
+                {
+                    DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local).AddSeconds(Convert.ToDouble(userDetails.UpcomingDeadlines[i].EndTime)).ToLocalTime();
+                    DateTime epochIST = epoch.AddSeconds(19800);
+                    userDetails.UpcomingDeadlines[i].DeadLineTime = epochIST;
+                }
+                return userDetails;
             }
-            //counting the no. of courses
-            var courseCountApp = App.Current as App;
-            courseCountApp.CourseCount = courseIdArray.Length;
-
-            //foreach (var item in userDetails.UpcomingDeadlines)
-            for(int i=0;i<userDetails.UpcomingDeadlines.Count;i++)
+            catch (Exception)
             {
-                DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0,DateTimeKind.Local).AddSeconds(Convert.ToDouble(userDetails.UpcomingDeadlines[i].EndTime)).ToLocalTime();
-                DateTime epochIST = epoch.AddSeconds(19800);
-                userDetails.UpcomingDeadlines[i].DeadLineTime = epochIST;
+                
+                throw;
             }
-            return userDetails;
         }
 
         /// <summary>
@@ -111,7 +143,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<Discussions> RetrieveDiscussionsByDiscussionId(string cookie, int discussionId)
         {
-            return await objAPIServiceLayer.RetrieveDiscussionsByDiscussionId(cookie, discussionId);
+            try
+            {
+                return await objAPIServiceLayer.RetrieveDiscussionsByDiscussionId(cookie, discussionId);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -122,7 +162,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<Course> RetrieveCoursesByCourseId(string cookie,int courseId)
         {
-            return await objAPIServiceLayer.RetrieveCoursesByCourseId(cookie, courseId);
+            try
+            {
+                return await objAPIServiceLayer.RetrieveCoursesByCourseId(cookie, courseId);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -133,7 +181,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<List<Deadlines>> RetrieveDeadlinesByCourseId(string cookie,int discussionId)
         {
-            return await objAPIServiceLayer.RetrieveDeadlinesByCourseId(cookie, discussionId);
+            try
+            {
+                return await objAPIServiceLayer.RetrieveDeadlinesByCourseId(cookie, discussionId);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -144,7 +200,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<List<Usebackpack.Model.Resources>> RetrieveResourcesByCourseId(string cookie,int courseId)
         {
-            return await objAPIServiceLayer.RetrieveResourcesByCourseId(cookie, courseId);
+            try
+            {
+                return await objAPIServiceLayer.RetrieveResourcesByCourseId(cookie, courseId);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -228,7 +292,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<int> PostDiscussion(string courseId, string userId, string body, string subject, string cookie)
         {
-            return await objAPIServiceLayer.PostDiscussion(courseId, userId, body, subject, cookie);
+            try
+            {
+                return await objAPIServiceLayer.PostDiscussion(courseId, userId, body, subject, cookie);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -241,7 +313,15 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<int> PostReply(string discussionId, string userId, string body, string cookie)
         {
-            return await objAPIServiceLayer.PostReply(discussionId, userId, body, cookie);
+            try
+            {
+                return await objAPIServiceLayer.PostReply(discussionId, userId, body, cookie);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
         /// <summary>
@@ -253,7 +333,46 @@ namespace Usebackpack.Business_Layer
         /// <returns></returns>
         public async Task<int> PostComments(string id, string comment, string cookie)
         {
-            return await objAPIServiceLayer.PostComments(id, comment, cookie);
+            try
+            {
+                return await objAPIServiceLayer.PostComments(id, comment, cookie);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<string> PushNotification(string cookie)
+        {
+            try
+            {
+                return await objAPIServiceLayer.PushNotification(cookie);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        public async Task<List<Notifications>> RetrieveNotification(string cookie)
+        {
+            try
+            {
+                return await objAPIServiceLayer.RetrieveNotification(cookie);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
     }
 }

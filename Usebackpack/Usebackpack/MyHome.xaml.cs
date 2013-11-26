@@ -50,7 +50,7 @@ namespace Usebackpack
         /// <param name="e"></param>
         private void MyCourse_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri(Constant.COURSESUPCOMINGDEADLINES, UriKind.Relative));
+            NavigationService.Navigate(new Uri(Constant.MYCOURSES, UriKind.Relative));
         }
 
         /// <summary>
@@ -73,16 +73,6 @@ namespace Usebackpack
             NavigationService.Navigate(new Uri(Constant.NOTIFICATION, UriKind.Relative));
         }
 
-        /// <summary>
-        /// Navigate to Settings page on click
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri(Constant.SETTINGS, UriKind.Relative));
-        }
-
         private void btnAbout_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri(Constant.ABOUT, UriKind.Relative));
@@ -91,6 +81,11 @@ namespace Usebackpack
         private void btnFeedback_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri(Constant.FEEDBACK, UriKind.Relative));
+        }
+
+        private void UpcomingDeadlines_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri(Constant.DEADLINEDETAILS, UriKind.Relative));
         }
 
         // Sample code for building a localized ApplicationBar

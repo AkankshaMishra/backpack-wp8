@@ -31,15 +31,23 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
-                <TextBlock Text="{Binding DueOn}" TextWrapping="Wrap" Margin="10,0,0,0"></TextBlock>
-                <TextBlock Text="{Binding Body}" TextWrapping="Wrap"></TextBlock>
-            </StackPanel>
+
+            <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstUpcomingDeadlines">
+                <phone:LongListSelector.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,10,0,0">
+                            <TextBlock x:Name="tbCourseName" Text="{Binding CourseName}" Style="{StaticResource PhoneTextLargeStyle}"/>
+                            <TextBlock x:Name="tbDeadlineName" Text="{Binding DeadlineName}" Style="{StaticResource PhoneTextLargeStyle}"/>
+                            <TextBlock x:Name="tbDeadlineTime" Text="{Binding DeadLineTime}" Style="{StaticResource PhoneTextLargeStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+
+                </phone:LongListSelector.ItemTemplate>
+
+            </phone:LongListSelector>
+            <TextBlock x:Name="tbNoDeadlines" Visibility="Collapsed" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
+
 
         </Grid>
     </Grid>

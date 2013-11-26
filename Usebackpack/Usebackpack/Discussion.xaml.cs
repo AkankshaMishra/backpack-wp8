@@ -28,11 +28,16 @@ namespace Usebackpack
         public Discussion()
         {
             InitializeComponent();
-            Loaded += Discussion_Loaded;          
+            Loaded += Discussion_Loaded;
         }
 
         public async void Discussion_Loaded(object sender, RoutedEventArgs e)
         {
+            //Progress Indicator
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            ProgressIndicator(true);
+            SystemTray.ProgressIndicator.Text = "Loading...Please wait";
+
             var discussion = App.Current as App;
             userId = discussion.User.UserId;
             cookie = discussion.Cookie;
@@ -40,12 +45,13 @@ namespace Usebackpack
             subject = discussion.Discussion.Subject;
             txtSubect.Text = objParser.ParseHTMLContent(WebUtility.HtmlDecode(subject));
             txtSubect.TextWrapping = TextWrapping.Wrap;
+
+
             objDiscussion = await RetrieveDiscussions(cookie, discussionId);
             //discussion value
             string discuss = objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Body));
             txtDiscussion.Text = discuss;
             txtDiscussion.TextWrapping = TextWrapping.Wrap;
-
             StackPanel spComments = new StackPanel();
             for (int i = 0; i < objDiscussion.Replies.Count; i++)
             {
@@ -59,7 +65,7 @@ namespace Usebackpack
                 breachReply.CornerRadius = new CornerRadius(5);
                 breachReply.BorderBrush = new SolidColorBrush(Colors.White);
                 breachReply.Margin = new Thickness(0, 15, 0, 0);
-                
+
                 //parent of reply border
                 spReply.Children.Add(breachReply);
 
@@ -74,7 +80,7 @@ namespace Usebackpack
                 TextBlock tbName = new TextBlock();
 
                 //tbName.Text = "Kumar" + i;
-                string repliesName=objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].UserName));
+                string repliesName = objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].UserName));
                 tbName.Text = repliesName;
                 tbName.TextWrapping = TextWrapping.Wrap;
                 speachReply.Children.Add(tbName);
@@ -85,7 +91,7 @@ namespace Usebackpack
                 tbRply.Text = repliesBody;
                 tbReply.TextWrapping = TextWrapping.Wrap;
 
-                
+
                 speachReply.Children.Add(tbRply);
                 //added reply  to spCommentReply stack panel
                 spCommentAndReply.Children.Add(speachReply);
@@ -107,13 +113,13 @@ namespace Usebackpack
                     //Adding textblock for comments
                     TextBlock tbNameComments = new TextBlock();
                     //tbNameComments.Text = "Kumar" + j;
-                    string commentsName=objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].Comments[j].UserName));
+                    string commentsName = objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].Comments[j].UserName));
                     tbNameComments.Text = commentsName;
                     tbNameComments.TextWrapping = TextWrapping.Wrap;
 
                     TextBlock tbComment = new TextBlock();
                     //tbComment.Text = "Comment" + j;
-                    string commentBody=objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].Comments[j].comment));
+                    string commentBody = objParser.ParseHTMLContent(WebUtility.HtmlDecode(objDiscussion.Replies[i].Comments[j].comment));
                     tbComment.Text = commentBody;
                     tbComment.TextWrapping = TextWrapping.Wrap;
 
@@ -166,7 +172,17 @@ namespace Usebackpack
             //btnReply.Width = 30;
             spSendReply.Children.Add(btnReply);
             spReply.Children.Add(brsendReply);
+
+            ProgressIndicator(false);
+
         }
+
+        private static void ProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
+        }
+
 
         //button for sending reply
         private async void btnReply_Click(object sender, RoutedEventArgs e)
@@ -179,7 +195,10 @@ namespace Usebackpack
             }
             else
             {
-                int ret = await objAPIBusinessLayer.PostComments(discussionId.ToString(), userId.ToString(), cookie);
+                int ret = await objAPIBusinessLayer.PostReply(discussionId.ToString(), userId.ToString(), replyName, cookie);
+                NavigationService.Navigate(new Uri("/CourseDetail.xaml?goto= 3", UriKind.Relative));
+                //NavigationService.Navigate(new Uri("/Discussion.xaml", UriKind.Relative));
+
             }
 
         }
@@ -199,7 +218,7 @@ namespace Usebackpack
 
                 StackPanel sp = (StackPanel)obj1;
                 //from the stackpanel , get the textbox from its id
-                var obj2 = sp.FindName("LastComment"+id);
+                var obj2 = sp.FindName("LastComment" + id);
 
                 TextBox txt = (TextBox)obj2;
                 //get the text of the element
@@ -212,7 +231,7 @@ namespace Usebackpack
                 }
                 else
                 {
-                    int ret=await objAPIBusinessLayer.PostReply(discussionId.ToString(), userId.ToString(), commentsText, cookie);
+                    int ret = await objAPIBusinessLayer.PostReply(discussionId.ToString(), userId.ToString(), commentsText, cookie);
                 }
             }
         }
@@ -221,7 +240,7 @@ namespace Usebackpack
         /// Method for retrieving discussions
         /// </summary>
         /// <returns></returns>
-        private async Task<Discussions> RetrieveDiscussions(string cookie,int discussionId)
+        private async Task<Discussions> RetrieveDiscussions(string cookie, int discussionId)
         {
             return await objAPIBusinessLayer.RetrieveDiscussionsByDiscussionId(cookie, discussionId);
         }

@@ -28,39 +28,23 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Grid x:Name="MyCoursesPanel">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Vertical">
-                    <TextBlock HorizontalAlignment="Left">Add Course</TextBlock>
-                    <TextBlock HorizontalAlignment="Right">Leave Course</TextBlock>
-                </StackPanel>
-                <StackPanel x:Name="spMyCourses" Grid.Row="1">
+        <ScrollViewer Grid.Row="1">
+            <Grid x:Name="ContentPanel" Margin="12,0,12,0">
+                <Grid x:Name="MyCoursesPanel">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
                     <phone:LongListSelector ItemsSource="{Binding}" x:Name="lstCourses">
                         <phone:LongListSelector.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,10,0,0">
-                                    <Button Content="{Binding CourseName}" x:Name="btnCourseName" Click="btnCourseName_Click"/>
+                                    <Button Content="{Binding CourseName}" Name="btnCourseName" Click="btnCourseName_Click" Width="400" Tag="{Binding CourseId}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </phone:LongListSelector.ItemTemplate>
                     </phone:LongListSelector>
-                </StackPanel>
-                <!--<toolkit:LongListMultiSelector
-                     ItemsSource="{Binding}"
-                     EnforceIsSelectionEnabled="True"
-                    LayoutMode="List">
-                    <toolkit:LongListMultiSelector.ItemTemplate>
-                        <DataTemplate>
-                            <Button Height="Auto" Content="Mobile Computing"></Button>
-                        </DataTemplate>
-                    </toolkit:LongListMultiSelector.ItemTemplate>
-                </toolkit:LongListMultiSelector>-->
+                </Grid>
             </Grid>
-        </Grid>
+        </ScrollViewer>
     </Grid>
-
 </phone:PhoneApplicationPage>

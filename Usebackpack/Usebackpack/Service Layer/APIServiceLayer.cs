@@ -60,7 +60,7 @@ namespace Usebackpack.Service_Layer
                     "authorization_code"));
                 return token;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 
                 throw;
@@ -288,6 +288,33 @@ namespace Usebackpack.Service_Layer
             }
         }
 
+
+        public async Task<List<Notifications>> RetrieveNotification(string cookie)
+        {
+            try
+            {
+                using (HttpClient retrieveNotificationClient = new HttpClient())
+                {
+                    retrieveNotificationClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    retrieveNotificationClient.DefaultRequestHeaders.Add("Cookie", cookie);
+
+                    HttpContent content = null;
+
+                    HttpResponseMessage responseNotification = await retrieveNotificationClient.PostAsync(new Uri(Constant.BASEURL + Constant.NOTIFICATIONS, UriKind.Absolute), content);
+                    string respNotification = await responseNotification.Content.ReadAsStringAsync();
+                    List<Usebackpack.Model.Notifications> lstNotification = JsonConvert.DeserializeObject<List<Usebackpack.Model.Notifications>>(respNotification);
+
+                    return lstNotification;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         /// <summary>
         /// Method to delete discussions
         /// </summary>
@@ -493,21 +520,21 @@ namespace Usebackpack.Service_Layer
         /// <param name="subject"></param>
         /// <param name="cookie"></param>
         /// <returns></returns>
-        public async Task<int> PostDiscussion(string courseId,string userId,string body,string subject,string cookie)
+        public async Task<int> PostDiscussion(string courseId, string userId, string body, string subject, string cookie)
         {
             try
             {
                 using (HttpClient postDiscussionClient = new HttpClient())
                 {
-
+                    
                     postDiscussionClient.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
                     postDiscussionClient.DefaultRequestHeaders.Add("Cookie", cookie);
 
                     Dictionary<string, string> dicPostDiscussion = new Dictionary<string, string>();
-                    dicPostDiscussion.Add("course_Id", courseId);
-                    dicPostDiscussion.Add("user_Id", userId);
-                    dicPostDiscussion.Add("body", body);
-                    dicPostDiscussion.Add("subject", subject);
+                    dicPostDiscussion.Add("discussion[course_id]", courseId);
+                    dicPostDiscussion.Add("discussion[user_id]", userId);
+                    dicPostDiscussion.Add("discussion[body]", body);
+                    dicPostDiscussion.Add("discussion[subject]", subject);
                     HttpContent postDiscussionContent = new FormUrlEncodedContent(dicPostDiscussion);
 
                     HttpResponseMessage responseMessagePostDiscussion = await postDiscussionClient.PostAsync(Constant.BASEURL + Constant.POSTDISCUSSION, postDiscussionContent);
@@ -519,7 +546,7 @@ namespace Usebackpack.Service_Layer
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -547,9 +574,10 @@ namespace Usebackpack.Service_Layer
 
                     Dictionary<string, string> dictPostReply = new Dictionary<string, string>();
 
-                    dictPostReply.Add("discussion_id", discussionId);
-                    dictPostReply.Add("user_id", userId);
-                    dictPostReply.Add("body", body);
+                    dictPostReply.Add("reply[discussion_id]", discussionId);
+                    dictPostReply.Add("reply[user_id]", userId);
+                    dictPostReply.Add("reply[body]", body);
+                    dictPostReply.Add("attlist", "");
 
                     HttpContent postReplyContent = new FormUrlEncodedContent(dictPostReply);
 
@@ -606,6 +634,39 @@ namespace Usebackpack.Service_Layer
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Method for Push Notification
+        /// </summary>
+        /// <param name="cookie"></param>
+        /// <returns></returns>
+        public async Task<string> PushNotification(string cookie)
+        {
+            try
+            {
+                using (HttpClient pushNotification = new HttpClient())
+                {
+
+                    var app = App.Current as App;
+                    string mpnsUrl = app.MPNSUrl;
+                    pushNotification.DefaultRequestHeaders.Add("Authorization", "Token token=" + Constant.BACKPACKAPIKEY + "");
+                    pushNotification.DefaultRequestHeaders.Add("Cookie", cookie);
+
+                    Dictionary<string, string> dicToken = new Dictionary<string, string>();
+                    dicToken.Add("uri", mpnsUrl);
+                    HttpContent requestContent = new FormUrlEncodedContent(dicToken);
+
+                    HttpResponseMessage pushResponse = await pushNotification.PostAsync(Constant.BASEURL + Constant.PUSHNOTIFICATION, requestContent);
+
+                    string responsePushNotification = await pushResponse.Content.ReadAsStringAsync();
+                    return responsePushNotification;
+                }
+            }
+            catch (Exception)
+            {
                 throw;
             }
         }

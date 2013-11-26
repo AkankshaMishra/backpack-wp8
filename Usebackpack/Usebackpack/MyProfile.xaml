@@ -52,7 +52,7 @@
                 <!--<TextBlock Grid.Row="3" Text="Born on" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
                 <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" x:Name="tbBirthday" />-->
                 <TextBlock Grid.Row="4" Text="Courses" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
-                <HyperlinkButton Grid.Row="4" Grid.Column="1" x:Name="hlbCourses" FontSize="30" HorizontalAlignment="Left"/>
+                <TextBlock x:Name="tbNoOfCourses" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" Grid.Row="4"></TextBlock>
                 <TextBlock Grid.Row="5" Text="Discussions" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>
                 <TextBlock Grid.Row="5" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" TextWrapping="Wrap" x:Name="tbDiscussions" Text="3"/>
                 <TextBlock Grid.Row="6" Text="Levels" Style="{StaticResource PhoneTextLargeStyle}"></TextBlock>

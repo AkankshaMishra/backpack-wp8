@@ -41,10 +41,11 @@ namespace Usebackpack
         {
             Button btnCourse = sender as Button;
             string courseName = btnCourse.Content.ToString();
-            var courseId = user.UserCourses.Where(c => c.CourseName == courseName).FirstOrDefault();
+            int courseId = Convert.ToInt32(btnCourse.Tag.ToString());
+            //var courseId = user.UserCourses.Where(c => c.CourseName == courseName).FirstOrDefault();
 
             var courseApp = App.Current as App;
-            courseApp.CourseId = courseId.CourseId;
+            courseApp.CourseId = courseId;
 
             NavigationService.Navigate(new Uri(Constant.COURSEDETAIL, UriKind.Relative));
         }

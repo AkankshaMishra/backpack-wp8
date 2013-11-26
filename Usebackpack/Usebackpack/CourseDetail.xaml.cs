@@ -46,6 +46,11 @@ namespace Usebackpack
         /// <param name="e"></param>
         private async void CourseDetail_Loaded(object sender, RoutedEventArgs e)
         {
+            //Progress Indicator
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "Loading...Please wait";
+            ProgressIndicator(true);
+
             var cookieApp = App.Current as App;
             cookie = cookieApp.Cookie;
             var userApp = App.Current as App;
@@ -91,6 +96,16 @@ namespace Usebackpack
                 string htmlOfficeHours = WebUtility.HtmlDecode(objCourse.OfficeHours);
                 string officeHours = objParser.ParseHTMLContent(htmlOfficeHours);
                 txtOfficeHours.Text = officeHours;
+            }
+
+            if (objCourse.Credits == 0)
+            {
+                tbCourseCredits.Visibility = System.Windows.Visibility.Collapsed;
+                txtCourseCredits.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                txtCourseCredits.Text = objCourse.Credits.ToString();
             }
 
             if (objCourse.Evaluation==null)
@@ -201,6 +216,26 @@ namespace Usebackpack
             {
                 listDiscussion.ItemsSource = lstDiscussion;
             }
+
+            ProgressIndicator(false);
+        }
+
+
+        private static void ProgressIndicator(bool isVisible)
+        {
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
+        }
+
+
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            string strItemIndex;
+            if (NavigationContext.QueryString.TryGetValue("goto", out strItemIndex))
+                CourseInfoPivot.SelectedIndex = Convert.ToInt32(strItemIndex);
+
+            base.OnNavigatedTo(e);
         }
 
         /// <summary>
@@ -363,6 +398,38 @@ namespace Usebackpack
                 // Handle the exception.
             }
         }
+
+        //private void CourseInfoPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (CourseInfoPivot.SelectedIndex == 0)
+        //    {
+        //        ApplicationBar.IsVisible = false;
+        //    }
+        //    if (CourseInfoPivot.SelectedIndex == 1)
+        //    {
+        //        ApplicationBar.IsVisible = false;
+        //    }
+        //    if (CourseInfoPivot.SelectedIndex == 2)
+        //    {
+        //        ApplicationBar.IsVisible = false;
+        //    }
+        //    if (CourseInfoPivot.SelectedIndex == 3)
+        //    {
+        //        ApplicationBar.IsVisible = true;
+        //    }
+        //}
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPostDiscussion_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/PostDiscussion.xaml", UriKind.Relative));
+        }
+
+        
     }
 
     //Delete this if its nt wrking

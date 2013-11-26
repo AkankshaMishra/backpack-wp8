@@ -21,25 +21,43 @@ namespace Usebackpack
         {
             InitializeComponent();
             Loaded += Notification_Loaded;
-            lstNotifications.ItemsSource = GetNotifications();
+            //lstNotifications.ItemsSource = GetNotifications();
         }
 
-        void Notification_Loaded(object sender, RoutedEventArgs e)
+        private async void Notification_Loaded(object sender, RoutedEventArgs e)
         {
+            //Progress Indicator
+            SystemTray.ProgressIndicator = new ProgressIndicator();
+            SystemTray.ProgressIndicator.Text = "Loading...Please wait";
+            ProgressIndicator(true);
+
             var cookieApp = App.Current as App;
             cookie = cookieApp.Cookie;
             var userApp = App.Current as App;
             user = userApp.User;
+            if (cookieApp.Message != null)
+            {
+                heading.Text = cookieApp.Message;
+            }
+            List<Notifications> listNotification=await objAPIServiceLayer.RetrieveNotification(cookie);
+            lstNotifications.ItemsSource = listNotification;
+            ProgressIndicator(false);
         }
 
-        private static List<Notifications> GetNotifications()
+        private static void ProgressIndicator(bool isVisible)
         {
-            List<Notifications> lstNotifications = new List<Notifications>();
-            lstNotifications.Add(new Notifications() { NotificationId = 1 , NotificationText = "Srikanta Bedathur started a new discussion in Advanced Programming", Link = "Codechef registrations" });
-            lstNotifications.Add(new Notifications() { NotificationId = 2 , NotificationText = "Srikanta Bedathur has posted a new resource in Advanced Programming", Link = "Apache commons collections" });
-            lstNotifications.Add(new Notifications() { NotificationId = 3, NotificationText = "Srikanta Bedathur has posted a new resource in Advanced Programming", Link = "Google Guava libraries" });
-            return lstNotifications;
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
         }
+
+        //private static List<Notifications> GetNotifications()
+        //{
+        //    List<Notifications> lstNotifications = new List<Notifications>();
+        //    lstNotifications.Add(new Notifications() { NotificationId = 1, NotificationText = "Srikanta Bedathur started a new discussion in Advanced Programming", Link = "Codechef registrations" });
+        //    lstNotifications.Add(new Notifications() { NotificationId = 2, NotificationText = "Srikanta Bedathur has posted a new resource in Advanced Programming", Link = "Apache commons collections" });
+        //    lstNotifications.Add(new Notifications() { NotificationId = 3, NotificationText = "Srikanta Bedathur has posted a new resource in Advanced Programming", Link = "Google Guava libraries" });
+        //    return lstNotifications;
+        //}
 
     }
 }

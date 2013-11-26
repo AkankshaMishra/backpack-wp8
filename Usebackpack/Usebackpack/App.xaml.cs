@@ -13,6 +13,8 @@ namespace Usebackpack
 {
     public partial class App : Application
     {
+        public string MPNSUrl { get; set; }
+
         public string Cookie { get; set; }
 
         public Users User { get; set; }
@@ -24,6 +26,8 @@ namespace Usebackpack
         public string GoogleToken { get; set; }
 
         public Discussions Discussion { get; set; }
+
+        public string Message { get; set; }
 
 
         /// <summary>
@@ -113,6 +117,10 @@ namespace Usebackpack
                 // An unhandled exception has occurred; break into the debugger
                 Debugger.Break();
             }
+
+            e.Handled = true;
+            (RootVisual as Microsoft.Phone.Controls.PhoneApplicationFrame).Source =
+             new Uri("/Error.xaml", UriKind.Relative);
         }
 
         #region Phone application initialization

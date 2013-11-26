@@ -50,10 +50,15 @@ namespace Usebackpack.Common
         public const string POSTDISCUSSION = "/api/discussion";
         public const string POSTREPLY = "/api/reply";
         public const string POSTCOMMENT = "/api/comment";
+        public const string PUSHNOTIFICATION = "/api/mpns";
+        public const string NOTIFICATIONS = "/api/notifications";
 
         //Messages
         public const string NODEADLINES = "You don't have any deadlines";
         public const string NOCOURSEDEADLINES = "No deadlines for this course yet";
         public const string NORESOURCES = "No Resources available for this course";
+
+        public const string CHANNELNAME = "MyAppChannel";
+        public const string FILENAME = "PushNotificationsSettings.dat";
     }
 }

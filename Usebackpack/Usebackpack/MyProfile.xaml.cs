@@ -55,7 +55,7 @@ namespace Usebackpack
             //tbBirthday.Text = Convert.ToString(user.Birthday);
             tbLevels.Text = Convert.ToString(user.Level);
             tbPoints.Text = Convert.ToString(user.TotalScore);
-            hlbCourses.Content = courseCount;            
+            tbNoOfCourses.Text = courseCount.ToString();            
         }
     }
 }
